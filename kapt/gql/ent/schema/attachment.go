@@ -16,7 +16,7 @@ func (AttachmentModel) Fields() []ent.Field {
 	return []ent.Field{
 		field.UUID("id", uuid.UUID{}).StorageKey("attachment_id"),
 		field.String("link"),
-		field.UUID("ticket_id", uuid.UUID{}),
+		field.UUID("thread_id", uuid.UUID{}),
 	}
 }
 

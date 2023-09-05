@@ -103,6 +103,25 @@ func (tmu *TicketModelUpdate) SetTime(t time.Time) *TicketModelUpdate {
 	return tmu
 }
 
+// SetClientPriority sets the "client_priority" field.
+func (tmu *TicketModelUpdate) SetClientPriority(i int) *TicketModelUpdate {
+	tmu.mutation.ResetClientPriority()
+	tmu.mutation.SetClientPriority(i)
+	return tmu
+}
+
+// AddClientPriority adds i to the "client_priority" field.
+func (tmu *TicketModelUpdate) AddClientPriority(i int) *TicketModelUpdate {
+	tmu.mutation.AddClientPriority(i)
+	return tmu
+}
+
+// SetSource sets the "source" field.
+func (tmu *TicketModelUpdate) SetSource(s string) *TicketModelUpdate {
+	tmu.mutation.SetSource(s)
+	return tmu
+}
+
 // Mutation returns the TicketModelMutation object of the builder.
 func (tmu *TicketModelUpdate) Mutation() *TicketModelMutation {
 	return tmu.mutation
@@ -179,6 +198,15 @@ func (tmu *TicketModelUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if value, ok := tmu.mutation.Time(); ok {
 		_spec.SetField(ticketmodel.FieldTime, field.TypeTime, value)
+	}
+	if value, ok := tmu.mutation.ClientPriority(); ok {
+		_spec.SetField(ticketmodel.FieldClientPriority, field.TypeInt, value)
+	}
+	if value, ok := tmu.mutation.AddedClientPriority(); ok {
+		_spec.AddField(ticketmodel.FieldClientPriority, field.TypeInt, value)
+	}
+	if value, ok := tmu.mutation.Source(); ok {
+		_spec.SetField(ticketmodel.FieldSource, field.TypeString, value)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, tmu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -271,6 +299,25 @@ func (tmuo *TicketModelUpdateOne) AddStatus(i int) *TicketModelUpdateOne {
 // SetTime sets the "time" field.
 func (tmuo *TicketModelUpdateOne) SetTime(t time.Time) *TicketModelUpdateOne {
 	tmuo.mutation.SetTime(t)
+	return tmuo
+}
+
+// SetClientPriority sets the "client_priority" field.
+func (tmuo *TicketModelUpdateOne) SetClientPriority(i int) *TicketModelUpdateOne {
+	tmuo.mutation.ResetClientPriority()
+	tmuo.mutation.SetClientPriority(i)
+	return tmuo
+}
+
+// AddClientPriority adds i to the "client_priority" field.
+func (tmuo *TicketModelUpdateOne) AddClientPriority(i int) *TicketModelUpdateOne {
+	tmuo.mutation.AddClientPriority(i)
+	return tmuo
+}
+
+// SetSource sets the "source" field.
+func (tmuo *TicketModelUpdateOne) SetSource(s string) *TicketModelUpdateOne {
+	tmuo.mutation.SetSource(s)
 	return tmuo
 }
 
@@ -380,6 +427,15 @@ func (tmuo *TicketModelUpdateOne) sqlSave(ctx context.Context) (_node *TicketMod
 	}
 	if value, ok := tmuo.mutation.Time(); ok {
 		_spec.SetField(ticketmodel.FieldTime, field.TypeTime, value)
+	}
+	if value, ok := tmuo.mutation.ClientPriority(); ok {
+		_spec.SetField(ticketmodel.FieldClientPriority, field.TypeInt, value)
+	}
+	if value, ok := tmuo.mutation.AddedClientPriority(); ok {
+		_spec.AddField(ticketmodel.FieldClientPriority, field.TypeInt, value)
+	}
+	if value, ok := tmuo.mutation.Source(); ok {
+		_spec.SetField(ticketmodel.FieldSource, field.TypeString, value)
 	}
 	_node = &TicketModel{config: tmuo.config}
 	_spec.Assign = _node.assignValues

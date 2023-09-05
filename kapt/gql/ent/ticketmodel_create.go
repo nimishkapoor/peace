@@ -81,6 +81,18 @@ func (tmc *TicketModelCreate) SetTime(t time.Time) *TicketModelCreate {
 	return tmc
 }
 
+// SetClientPriority sets the "client_priority" field.
+func (tmc *TicketModelCreate) SetClientPriority(i int) *TicketModelCreate {
+	tmc.mutation.SetClientPriority(i)
+	return tmc
+}
+
+// SetSource sets the "source" field.
+func (tmc *TicketModelCreate) SetSource(s string) *TicketModelCreate {
+	tmc.mutation.SetSource(s)
+	return tmc
+}
+
 // SetID sets the "id" field.
 func (tmc *TicketModelCreate) SetID(u uuid.UUID) *TicketModelCreate {
 	tmc.mutation.SetID(u)
@@ -150,6 +162,12 @@ func (tmc *TicketModelCreate) check() error {
 	}
 	if _, ok := tmc.mutation.Time(); !ok {
 		return &ValidationError{Name: "time", err: errors.New(`ent: missing required field "TicketModel.time"`)}
+	}
+	if _, ok := tmc.mutation.ClientPriority(); !ok {
+		return &ValidationError{Name: "client_priority", err: errors.New(`ent: missing required field "TicketModel.client_priority"`)}
+	}
+	if _, ok := tmc.mutation.Source(); !ok {
+		return &ValidationError{Name: "source", err: errors.New(`ent: missing required field "TicketModel.source"`)}
 	}
 	return nil
 }
@@ -225,6 +243,14 @@ func (tmc *TicketModelCreate) createSpec() (*TicketModel, *sqlgraph.CreateSpec) 
 	if value, ok := tmc.mutation.Time(); ok {
 		_spec.SetField(ticketmodel.FieldTime, field.TypeTime, value)
 		_node.Time = value
+	}
+	if value, ok := tmc.mutation.ClientPriority(); ok {
+		_spec.SetField(ticketmodel.FieldClientPriority, field.TypeInt, value)
+		_node.ClientPriority = value
+	}
+	if value, ok := tmc.mutation.Source(); ok {
+		_spec.SetField(ticketmodel.FieldSource, field.TypeString, value)
+		_node.Source = value
 	}
 	return _node, _spec
 }

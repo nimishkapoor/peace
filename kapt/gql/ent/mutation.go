@@ -1239,8 +1239,10 @@ type ThreadModelMutation struct {
 	typ           string
 	id            *uuid.UUID
 	body          *string
-	status        *int
-	addstatus     *int
+	link          *string
+	time          *time.Time
+	ticket_uuid   *uuid.UUID
+	source        *string
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*ThreadModel, error)
@@ -1387,60 +1389,148 @@ func (m *ThreadModelMutation) ResetBody() {
 	m.body = nil
 }
 
-// SetStatus sets the "status" field.
-func (m *ThreadModelMutation) SetStatus(i int) {
-	m.status = &i
-	m.addstatus = nil
+// SetLink sets the "link" field.
+func (m *ThreadModelMutation) SetLink(s string) {
+	m.link = &s
 }
 
-// Status returns the value of the "status" field in the mutation.
-func (m *ThreadModelMutation) Status() (r int, exists bool) {
-	v := m.status
+// Link returns the value of the "link" field in the mutation.
+func (m *ThreadModelMutation) Link() (r string, exists bool) {
+	v := m.link
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldStatus returns the old "status" field's value of the ThreadModel entity.
+// OldLink returns the old "link" field's value of the ThreadModel entity.
 // If the ThreadModel object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ThreadModelMutation) OldStatus(ctx context.Context) (v int, err error) {
+func (m *ThreadModelMutation) OldLink(ctx context.Context) (v string, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldStatus is only allowed on UpdateOne operations")
+		return v, errors.New("OldLink is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldStatus requires an ID field in the mutation")
+		return v, errors.New("OldLink requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldStatus: %w", err)
+		return v, fmt.Errorf("querying old value for OldLink: %w", err)
 	}
-	return oldValue.Status, nil
+	return oldValue.Link, nil
 }
 
-// AddStatus adds i to the "status" field.
-func (m *ThreadModelMutation) AddStatus(i int) {
-	if m.addstatus != nil {
-		*m.addstatus += i
-	} else {
-		m.addstatus = &i
-	}
+// ResetLink resets all changes to the "link" field.
+func (m *ThreadModelMutation) ResetLink() {
+	m.link = nil
 }
 
-// AddedStatus returns the value that was added to the "status" field in this mutation.
-func (m *ThreadModelMutation) AddedStatus() (r int, exists bool) {
-	v := m.addstatus
+// SetTime sets the "time" field.
+func (m *ThreadModelMutation) SetTime(t time.Time) {
+	m.time = &t
+}
+
+// Time returns the value of the "time" field in the mutation.
+func (m *ThreadModelMutation) Time() (r time.Time, exists bool) {
+	v := m.time
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// ResetStatus resets all changes to the "status" field.
-func (m *ThreadModelMutation) ResetStatus() {
-	m.status = nil
-	m.addstatus = nil
+// OldTime returns the old "time" field's value of the ThreadModel entity.
+// If the ThreadModel object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ThreadModelMutation) OldTime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTime: %w", err)
+	}
+	return oldValue.Time, nil
+}
+
+// ResetTime resets all changes to the "time" field.
+func (m *ThreadModelMutation) ResetTime() {
+	m.time = nil
+}
+
+// SetTicketUUID sets the "ticket_uuid" field.
+func (m *ThreadModelMutation) SetTicketUUID(u uuid.UUID) {
+	m.ticket_uuid = &u
+}
+
+// TicketUUID returns the value of the "ticket_uuid" field in the mutation.
+func (m *ThreadModelMutation) TicketUUID() (r uuid.UUID, exists bool) {
+	v := m.ticket_uuid
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldTicketUUID returns the old "ticket_uuid" field's value of the ThreadModel entity.
+// If the ThreadModel object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ThreadModelMutation) OldTicketUUID(ctx context.Context) (v uuid.UUID, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldTicketUUID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldTicketUUID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldTicketUUID: %w", err)
+	}
+	return oldValue.TicketUUID, nil
+}
+
+// ResetTicketUUID resets all changes to the "ticket_uuid" field.
+func (m *ThreadModelMutation) ResetTicketUUID() {
+	m.ticket_uuid = nil
+}
+
+// SetSource sets the "source" field.
+func (m *ThreadModelMutation) SetSource(s string) {
+	m.source = &s
+}
+
+// Source returns the value of the "source" field in the mutation.
+func (m *ThreadModelMutation) Source() (r string, exists bool) {
+	v := m.source
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSource returns the old "source" field's value of the ThreadModel entity.
+// If the ThreadModel object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ThreadModelMutation) OldSource(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldSource is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldSource requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSource: %w", err)
+	}
+	return oldValue.Source, nil
+}
+
+// ResetSource resets all changes to the "source" field.
+func (m *ThreadModelMutation) ResetSource() {
+	m.source = nil
 }
 
 // Where appends a list predicates to the ThreadModelMutation builder.
@@ -1477,12 +1567,21 @@ func (m *ThreadModelMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *ThreadModelMutation) Fields() []string {
-	fields := make([]string, 0, 2)
+	fields := make([]string, 0, 5)
 	if m.body != nil {
 		fields = append(fields, threadmodel.FieldBody)
 	}
-	if m.status != nil {
-		fields = append(fields, threadmodel.FieldStatus)
+	if m.link != nil {
+		fields = append(fields, threadmodel.FieldLink)
+	}
+	if m.time != nil {
+		fields = append(fields, threadmodel.FieldTime)
+	}
+	if m.ticket_uuid != nil {
+		fields = append(fields, threadmodel.FieldTicketUUID)
+	}
+	if m.source != nil {
+		fields = append(fields, threadmodel.FieldSource)
 	}
 	return fields
 }
@@ -1494,8 +1593,14 @@ func (m *ThreadModelMutation) Field(name string) (ent.Value, bool) {
 	switch name {
 	case threadmodel.FieldBody:
 		return m.Body()
-	case threadmodel.FieldStatus:
-		return m.Status()
+	case threadmodel.FieldLink:
+		return m.Link()
+	case threadmodel.FieldTime:
+		return m.Time()
+	case threadmodel.FieldTicketUUID:
+		return m.TicketUUID()
+	case threadmodel.FieldSource:
+		return m.Source()
 	}
 	return nil, false
 }
@@ -1507,8 +1612,14 @@ func (m *ThreadModelMutation) OldField(ctx context.Context, name string) (ent.Va
 	switch name {
 	case threadmodel.FieldBody:
 		return m.OldBody(ctx)
-	case threadmodel.FieldStatus:
-		return m.OldStatus(ctx)
+	case threadmodel.FieldLink:
+		return m.OldLink(ctx)
+	case threadmodel.FieldTime:
+		return m.OldTime(ctx)
+	case threadmodel.FieldTicketUUID:
+		return m.OldTicketUUID(ctx)
+	case threadmodel.FieldSource:
+		return m.OldSource(ctx)
 	}
 	return nil, fmt.Errorf("unknown ThreadModel field %s", name)
 }
@@ -1525,12 +1636,33 @@ func (m *ThreadModelMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetBody(v)
 		return nil
-	case threadmodel.FieldStatus:
-		v, ok := value.(int)
+	case threadmodel.FieldLink:
+		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetStatus(v)
+		m.SetLink(v)
+		return nil
+	case threadmodel.FieldTime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTime(v)
+		return nil
+	case threadmodel.FieldTicketUUID:
+		v, ok := value.(uuid.UUID)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetTicketUUID(v)
+		return nil
+	case threadmodel.FieldSource:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSource(v)
 		return nil
 	}
 	return fmt.Errorf("unknown ThreadModel field %s", name)
@@ -1539,21 +1671,13 @@ func (m *ThreadModelMutation) SetField(name string, value ent.Value) error {
 // AddedFields returns all numeric fields that were incremented/decremented during
 // this mutation.
 func (m *ThreadModelMutation) AddedFields() []string {
-	var fields []string
-	if m.addstatus != nil {
-		fields = append(fields, threadmodel.FieldStatus)
-	}
-	return fields
+	return nil
 }
 
 // AddedField returns the numeric value that was incremented/decremented on a field
 // with the given name. The second boolean return value indicates that this field
 // was not set, or was not defined in the schema.
 func (m *ThreadModelMutation) AddedField(name string) (ent.Value, bool) {
-	switch name {
-	case threadmodel.FieldStatus:
-		return m.AddedStatus()
-	}
 	return nil, false
 }
 
@@ -1562,13 +1686,6 @@ func (m *ThreadModelMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *ThreadModelMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case threadmodel.FieldStatus:
-		v, ok := value.(int)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddStatus(v)
-		return nil
 	}
 	return fmt.Errorf("unknown ThreadModel numeric field %s", name)
 }
@@ -1599,8 +1716,17 @@ func (m *ThreadModelMutation) ResetField(name string) error {
 	case threadmodel.FieldBody:
 		m.ResetBody()
 		return nil
-	case threadmodel.FieldStatus:
-		m.ResetStatus()
+	case threadmodel.FieldLink:
+		m.ResetLink()
+		return nil
+	case threadmodel.FieldTime:
+		m.ResetTime()
+		return nil
+	case threadmodel.FieldTicketUUID:
+		m.ResetTicketUUID()
+		return nil
+	case threadmodel.FieldSource:
+		m.ResetSource()
 		return nil
 	}
 	return fmt.Errorf("unknown ThreadModel field %s", name)
@@ -1657,25 +1783,28 @@ func (m *ThreadModelMutation) ResetEdge(name string) error {
 // TicketModelMutation represents an operation that mutates the TicketModel nodes in the graph.
 type TicketModelMutation struct {
 	config
-	op            Op
-	typ           string
-	id            *uuid.UUID
-	user_id       *uuid.UUID
-	tenant_id     *uuid.UUID
-	subject       *string
-	body          *string
-	category      *uuid.UUID
-	label         *string
-	assignee_id   *uuid.UUID
-	severity      *int
-	addseverity   *int
-	status        *int
-	addstatus     *int
-	time          *time.Time
-	clearedFields map[string]struct{}
-	done          bool
-	oldValue      func(context.Context) (*TicketModel, error)
-	predicates    []predicate.TicketModel
+	op                 Op
+	typ                string
+	id                 *uuid.UUID
+	user_id            *uuid.UUID
+	tenant_id          *uuid.UUID
+	subject            *string
+	body               *string
+	category           *uuid.UUID
+	label              *string
+	assignee_id        *uuid.UUID
+	severity           *int
+	addseverity        *int
+	status             *int
+	addstatus          *int
+	time               *time.Time
+	client_priority    *int
+	addclient_priority *int
+	source             *string
+	clearedFields      map[string]struct{}
+	done               bool
+	oldValue           func(context.Context) (*TicketModel, error)
+	predicates         []predicate.TicketModel
 }
 
 var _ ent.Mutation = (*TicketModelMutation)(nil)
@@ -2182,6 +2311,98 @@ func (m *TicketModelMutation) ResetTime() {
 	m.time = nil
 }
 
+// SetClientPriority sets the "client_priority" field.
+func (m *TicketModelMutation) SetClientPriority(i int) {
+	m.client_priority = &i
+	m.addclient_priority = nil
+}
+
+// ClientPriority returns the value of the "client_priority" field in the mutation.
+func (m *TicketModelMutation) ClientPriority() (r int, exists bool) {
+	v := m.client_priority
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldClientPriority returns the old "client_priority" field's value of the TicketModel entity.
+// If the TicketModel object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *TicketModelMutation) OldClientPriority(ctx context.Context) (v int, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldClientPriority is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldClientPriority requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldClientPriority: %w", err)
+	}
+	return oldValue.ClientPriority, nil
+}
+
+// AddClientPriority adds i to the "client_priority" field.
+func (m *TicketModelMutation) AddClientPriority(i int) {
+	if m.addclient_priority != nil {
+		*m.addclient_priority += i
+	} else {
+		m.addclient_priority = &i
+	}
+}
+
+// AddedClientPriority returns the value that was added to the "client_priority" field in this mutation.
+func (m *TicketModelMutation) AddedClientPriority() (r int, exists bool) {
+	v := m.addclient_priority
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// ResetClientPriority resets all changes to the "client_priority" field.
+func (m *TicketModelMutation) ResetClientPriority() {
+	m.client_priority = nil
+	m.addclient_priority = nil
+}
+
+// SetSource sets the "source" field.
+func (m *TicketModelMutation) SetSource(s string) {
+	m.source = &s
+}
+
+// Source returns the value of the "source" field in the mutation.
+func (m *TicketModelMutation) Source() (r string, exists bool) {
+	v := m.source
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldSource returns the old "source" field's value of the TicketModel entity.
+// If the TicketModel object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *TicketModelMutation) OldSource(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldSource is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldSource requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldSource: %w", err)
+	}
+	return oldValue.Source, nil
+}
+
+// ResetSource resets all changes to the "source" field.
+func (m *TicketModelMutation) ResetSource() {
+	m.source = nil
+}
+
 // Where appends a list predicates to the TicketModelMutation builder.
 func (m *TicketModelMutation) Where(ps ...predicate.TicketModel) {
 	m.predicates = append(m.predicates, ps...)
@@ -2216,7 +2437,7 @@ func (m *TicketModelMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *TicketModelMutation) Fields() []string {
-	fields := make([]string, 0, 10)
+	fields := make([]string, 0, 12)
 	if m.user_id != nil {
 		fields = append(fields, ticketmodel.FieldUserID)
 	}
@@ -2247,6 +2468,12 @@ func (m *TicketModelMutation) Fields() []string {
 	if m.time != nil {
 		fields = append(fields, ticketmodel.FieldTime)
 	}
+	if m.client_priority != nil {
+		fields = append(fields, ticketmodel.FieldClientPriority)
+	}
+	if m.source != nil {
+		fields = append(fields, ticketmodel.FieldSource)
+	}
 	return fields
 }
 
@@ -2275,6 +2502,10 @@ func (m *TicketModelMutation) Field(name string) (ent.Value, bool) {
 		return m.Status()
 	case ticketmodel.FieldTime:
 		return m.Time()
+	case ticketmodel.FieldClientPriority:
+		return m.ClientPriority()
+	case ticketmodel.FieldSource:
+		return m.Source()
 	}
 	return nil, false
 }
@@ -2304,6 +2535,10 @@ func (m *TicketModelMutation) OldField(ctx context.Context, name string) (ent.Va
 		return m.OldStatus(ctx)
 	case ticketmodel.FieldTime:
 		return m.OldTime(ctx)
+	case ticketmodel.FieldClientPriority:
+		return m.OldClientPriority(ctx)
+	case ticketmodel.FieldSource:
+		return m.OldSource(ctx)
 	}
 	return nil, fmt.Errorf("unknown TicketModel field %s", name)
 }
@@ -2383,6 +2618,20 @@ func (m *TicketModelMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetTime(v)
 		return nil
+	case ticketmodel.FieldClientPriority:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetClientPriority(v)
+		return nil
+	case ticketmodel.FieldSource:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetSource(v)
+		return nil
 	}
 	return fmt.Errorf("unknown TicketModel field %s", name)
 }
@@ -2397,6 +2646,9 @@ func (m *TicketModelMutation) AddedFields() []string {
 	if m.addstatus != nil {
 		fields = append(fields, ticketmodel.FieldStatus)
 	}
+	if m.addclient_priority != nil {
+		fields = append(fields, ticketmodel.FieldClientPriority)
+	}
 	return fields
 }
 
@@ -2409,6 +2661,8 @@ func (m *TicketModelMutation) AddedField(name string) (ent.Value, bool) {
 		return m.AddedSeverity()
 	case ticketmodel.FieldStatus:
 		return m.AddedStatus()
+	case ticketmodel.FieldClientPriority:
+		return m.AddedClientPriority()
 	}
 	return nil, false
 }
@@ -2431,6 +2685,13 @@ func (m *TicketModelMutation) AddField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.AddStatus(v)
+		return nil
+	case ticketmodel.FieldClientPriority:
+		v, ok := value.(int)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.AddClientPriority(v)
 		return nil
 	}
 	return fmt.Errorf("unknown TicketModel numeric field %s", name)
@@ -2488,6 +2749,12 @@ func (m *TicketModelMutation) ResetField(name string) error {
 		return nil
 	case ticketmodel.FieldTime:
 		m.ResetTime()
+		return nil
+	case ticketmodel.FieldClientPriority:
+		m.ResetClientPriority()
+		return nil
+	case ticketmodel.FieldSource:
+		m.ResetSource()
 		return nil
 	}
 	return fmt.Errorf("unknown TicketModel field %s", name)

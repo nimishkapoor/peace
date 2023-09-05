@@ -1,0 +1,4 @@
+#Define a query for getting all tickets.
+type Query {
+    tickets: String!
+}

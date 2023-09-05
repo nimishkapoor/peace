@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"kapt/kapt/gql/ent/threadmodel"
 	"strings"
+	"time"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
@@ -19,8 +20,14 @@ type ThreadModel struct {
 	ID uuid.UUID `json:"id,omitempty"`
 	// Body holds the value of the "body" field.
 	Body string `json:"body,omitempty"`
-	// Status holds the value of the "status" field.
-	Status       int `json:"status,omitempty"`
+	// Link holds the value of the "link" field.
+	Link string `json:"link,omitempty"`
+	// Time holds the value of the "time" field.
+	Time time.Time `json:"time,omitempty"`
+	// TicketUUID holds the value of the "ticket_uuid" field.
+	TicketUUID uuid.UUID `json:"ticket_uuid,omitempty"`
+	// Source holds the value of the "source" field.
+	Source       string `json:"source,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -29,11 +36,11 @@ func (*ThreadModel) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case threadmodel.FieldStatus:
-			values[i] = new(sql.NullInt64)
-		case threadmodel.FieldBody:
+		case threadmodel.FieldBody, threadmodel.FieldLink, threadmodel.FieldSource:
 			values[i] = new(sql.NullString)
-		case threadmodel.FieldID:
+		case threadmodel.FieldTime:
+			values[i] = new(sql.NullTime)
+		case threadmodel.FieldID, threadmodel.FieldTicketUUID:
 			values[i] = new(uuid.UUID)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -62,11 +69,29 @@ func (tm *ThreadModel) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				tm.Body = value.String
 			}
-		case threadmodel.FieldStatus:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field status", values[i])
+		case threadmodel.FieldLink:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field link", values[i])
 			} else if value.Valid {
-				tm.Status = int(value.Int64)
+				tm.Link = value.String
+			}
+		case threadmodel.FieldTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field time", values[i])
+			} else if value.Valid {
+				tm.Time = value.Time
+			}
+		case threadmodel.FieldTicketUUID:
+			if value, ok := values[i].(*uuid.UUID); !ok {
+				return fmt.Errorf("unexpected type %T for field ticket_uuid", values[i])
+			} else if value != nil {
+				tm.TicketUUID = *value
+			}
+		case threadmodel.FieldSource:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field source", values[i])
+			} else if value.Valid {
+				tm.Source = value.String
 			}
 		default:
 			tm.selectValues.Set(columns[i], values[i])
@@ -107,8 +132,17 @@ func (tm *ThreadModel) String() string {
 	builder.WriteString("body=")
 	builder.WriteString(tm.Body)
 	builder.WriteString(", ")
-	builder.WriteString("status=")
-	builder.WriteString(fmt.Sprintf("%v", tm.Status))
+	builder.WriteString("link=")
+	builder.WriteString(tm.Link)
+	builder.WriteString(", ")
+	builder.WriteString("time=")
+	builder.WriteString(tm.Time.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("ticket_uuid=")
+	builder.WriteString(fmt.Sprintf("%v", tm.TicketUUID))
+	builder.WriteString(", ")
+	builder.WriteString("source=")
+	builder.WriteString(tm.Source)
 	builder.WriteByte(')')
 	return builder.String()
 }

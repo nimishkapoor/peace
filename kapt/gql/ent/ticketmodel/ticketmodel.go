@@ -31,6 +31,10 @@ const (
 	FieldStatus = "status"
 	// FieldTime holds the string denoting the time field in the database.
 	FieldTime = "time"
+	// FieldClientPriority holds the string denoting the client_priority field in the database.
+	FieldClientPriority = "client_priority"
+	// FieldSource holds the string denoting the source field in the database.
+	FieldSource = "source"
 	// Table holds the table name of the ticketmodel in the database.
 	Table = "ticket_models"
 )
@@ -48,6 +52,8 @@ var Columns = []string{
 	FieldSeverity,
 	FieldStatus,
 	FieldTime,
+	FieldClientPriority,
+	FieldSource,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -116,4 +122,14 @@ func ByStatus(opts ...sql.OrderTermOption) OrderOption {
 // ByTime orders the results by the time field.
 func ByTime(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldTime, opts...).ToFunc()
+}
+
+// ByClientPriority orders the results by the client_priority field.
+func ByClientPriority(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldClientPriority, opts...).ToFunc()
+}
+
+// BySource orders the results by the source field.
+func BySource(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSource, opts...).ToFunc()
 }

@@ -7,25 +7,52 @@ import (
 	"github.com/go-kit/kit/endpoint"
 )
 
+type KapTContext struct {
+	Ctx     context.Context
+	Request interface{}
+}
+
+const contextKey string = "kapt_context"
+
+func NewKapTContext(ctx context.Context, req interface{}) context.Context {
+	kapTCtx := &KapTContext{
+		Ctx:     ctx,
+		Request: req,
+	}
+	return context.WithValue(ctx, contextKey, kapTCtx)
+}
+
 type Endpoints struct {
-	CreateNewUser endpoint.Endpoint
-	AuthLogin     endpoint.Endpoint
-	GetTickets    endpoint.Endpoint
-	CreateTicket  endpoint.Endpoint
-	UpdateTicket  endpoint.Endpoint
-	DeleteTicket  endpoint.Endpoint
-	GraphQL       endpoint.Endpoint
+	CreateNewUser  endpoint.Endpoint
+	AuthLogin      endpoint.Endpoint
+	GetTickets     endpoint.Endpoint
+	CreateTicket   endpoint.Endpoint
+	UpdateTicket   endpoint.Endpoint
+	DeleteTicket   endpoint.Endpoint
+	GraphQL        endpoint.Endpoint
+	CreateCategory endpoint.Endpoint
+	DeleteCategory endpoint.Endpoint
+	CreateComment  endpoint.Endpoint
+	UpdateComment  endpoint.Endpoint
+	DeleteComment  endpoint.Endpoint
+	GetComments    endpoint.Endpoint
 }
 
 func MakeEndpoints(s Service) Endpoints {
 	return Endpoints{
-		CreateNewUser: makeCreateNewUserEndpoint(s),
-		AuthLogin:     makeAuthLoginEndpoint(s),
-		GetTickets:    makeGetTicketsEndpoint(s),
-		CreateTicket:  makeCreateTicketEndpoint(s),
-		UpdateTicket:  makeUpdateTicketEndpoint(s),
-		DeleteTicket:  makeDeleteTicketEndpoint(s),
-		GraphQL:       makeGraphQLEndpoint(s),
+		CreateNewUser:  makeCreateNewUserEndpoint(s),
+		AuthLogin:      makeAuthLoginEndpoint(s),
+		GetTickets:     makeGetTicketsEndpoint(s),
+		CreateTicket:   makeCreateTicketEndpoint(s),
+		UpdateTicket:   makeUpdateTicketEndpoint(s),
+		DeleteTicket:   makeDeleteTicketEndpoint(s),
+		GraphQL:        makeGraphQLEndpoint(s),
+		CreateCategory: makeCreateCategoryEndpoint(s),
+		DeleteCategory: makeDeleteCategoryEndpoint(s),
+		CreateComment:  makeCreateCommentEndpoint(s),
+		UpdateComment:  makeUpdateCommentEndpoint(s),
+		DeleteComment:  makeDeleteCommentEndpoint(s),
+		GetComments:    makeGetCommentsEndpoint(s),
 	}
 }
 
@@ -53,45 +80,46 @@ func makeAuthLoginEndpoint(s Service) endpoint.Endpoint {
 
 func makeGetTicketsEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(GetPollsRequest)
-		polls, err := s.GetPolls(ctx, req.Token)
+		req := request.(GetTicketRequest)
+		tickets, err := s.GetTickets(ctx, req.Token)
 		if err != nil {
 			return ErrorResponse{Error: err.Error()}, nil
 		}
-		return GetPollsResponse{Polls: polls}, err
+		return GetTicketsResponse{Tickets: tickets}, err
 	}
 }
 
 func makeCreateTicketEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(CreatePollRequest)
-		ok, err := s.CreatePoll(ctx, req.Token, req.Subject, req.Opt1, req.Opt2, req.Opt3, req.Opt4)
+		req := request.(CreateTicketRequest)
+		ctx = NewKapTContext(ctx, request)
+		ticket, err := s.CreateTicket(ctx, req.Token)
 		if err != nil {
 			return ErrorResponse{Error: err.Error()}, nil
 		}
-		return CreatePollResponse{Msg: ok}, err
+		return CreateTicketResponse{UUID: ticket}, err
 	}
 }
 
 func makeUpdateTicketEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(VoteRequest)
-		ok, err := s.Vote(ctx, req.Token, req.OptId)
+		req := request.(UpdateTicketRequest)
+		ok, err := s.UpdateTicket(ctx, req.Token)
 		if err != nil {
 			return ErrorResponse{Error: err.Error()}, nil
 		}
-		return VoteResponse{Msg: ok}, err
+		return UpdateTicketResponse{Msg: ok}, err
 	}
 }
 
 func makeDeleteTicketEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(VotedByRequest)
-		votes, err := s.VotedBy(ctx, req.Token, req.OptId)
+		req := request.(DeleteTicketRequest)
+		ok, err := s.DeleteTicket(ctx, req.Token)
 		if err != nil {
 			return ErrorResponse{Error: err.Error()}, nil
 		}
-		return VotedByResponse{Votes: votes}, err
+		return DeleteTicketResponse{Msg: ok}, err
 	}
 }
 
@@ -103,5 +131,83 @@ func makeGraphQLEndpoint(s Service) endpoint.Endpoint {
 			return ErrorResponse{Error: err.Error()}, nil
 		}
 		return votes, err
+	}
+}
+
+func makeCreateCategoryEndpoint(s Service) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		req := request.(CreateCategoryRequest)
+		category, err := s.CreateCategory(ctx, req.Token)
+		if err != nil {
+			return ErrorResponse{Error: err.Error()}, nil
+		}
+		return CreateCategoryResponse{UUID: category}, err
+	}
+}
+
+func makeDeleteCategoryEndpoint(s Service) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		req := request.(DeleteCategoryRequest)
+		ok, err := s.DeleteCategory(ctx, req.Token)
+		if err != nil {
+			return ErrorResponse{Error: err.Error()}, nil
+		}
+		return DeleteCategoryResponse{Msg: ok}, err
+	}
+}
+
+func makeGetCategoriesEndpoint(s Service) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		req := request.(GetCategoriesRequest)
+
+		ok, err := s.GetCategories(ctx, req.Token)
+		if err != nil {
+			return ErrorResponse{Error: err.Error()}, nil
+		}
+		return GetCategoriesResponse{Categories: ok}, err
+	}
+}
+
+func makeCreateCommentEndpoint(s Service) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		req := request.(CreateCommentRequest)
+		ok, err := s.CreateComment(ctx, req.Token)
+		if err != nil {
+			return ErrorResponse{Error: err.Error()}, nil
+		}
+		return CreateCommentResponse{UUID: ok}, err
+	}
+}
+
+func makeUpdateCommentEndpoint(s Service) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		req := request.(UpdateCommentRequest)
+		ok, err := s.UpdateComment(ctx, req.Token)
+		if err != nil {
+			return ErrorResponse{Error: err.Error()}, nil
+		}
+		return UpdateCommentResponse{Msg: ok}, err
+	}
+}
+
+func makeDeleteCommentEndpoint(s Service) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		req := request.(DeleteCommentRequest)
+		ok, err := s.DeleteComment(ctx, req.Token)
+		if err != nil {
+			return ErrorResponse{Error: err.Error()}, nil
+		}
+		return DeleteCommentResponse{Msg: ok}, err
+	}
+}
+
+func makeGetCommentsEndpoint(s Service) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		req := request.(GetCommentsRequest)
+		ok, err := s.GetComments(ctx, req.Token)
+		if err != nil {
+			return ErrorResponse{Error: err.Error()}, nil
+		}
+		return GetCommentsResponse{Comments: ok}, err
 	}
 }

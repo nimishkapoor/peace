@@ -4,6 +4,7 @@ package threadmodel
 
 import (
 	"kapt/kapt/gql/ent/predicate"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/google/uuid"
@@ -59,9 +60,24 @@ func Body(v string) predicate.ThreadModel {
 	return predicate.ThreadModel(sql.FieldEQ(FieldBody, v))
 }
 
-// Status applies equality check predicate on the "status" field. It's identical to StatusEQ.
-func Status(v int) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldEQ(FieldStatus, v))
+// Link applies equality check predicate on the "link" field. It's identical to LinkEQ.
+func Link(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldEQ(FieldLink, v))
+}
+
+// Time applies equality check predicate on the "time" field. It's identical to TimeEQ.
+func Time(v time.Time) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldEQ(FieldTime, v))
+}
+
+// TicketUUID applies equality check predicate on the "ticket_uuid" field. It's identical to TicketUUIDEQ.
+func TicketUUID(v uuid.UUID) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldEQ(FieldTicketUUID, v))
+}
+
+// Source applies equality check predicate on the "source" field. It's identical to SourceEQ.
+func Source(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldEQ(FieldSource, v))
 }
 
 // BodyEQ applies the EQ predicate on the "body" field.
@@ -129,44 +145,214 @@ func BodyContainsFold(v string) predicate.ThreadModel {
 	return predicate.ThreadModel(sql.FieldContainsFold(FieldBody, v))
 }
 
-// StatusEQ applies the EQ predicate on the "status" field.
-func StatusEQ(v int) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldEQ(FieldStatus, v))
+// LinkEQ applies the EQ predicate on the "link" field.
+func LinkEQ(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldEQ(FieldLink, v))
 }
 
-// StatusNEQ applies the NEQ predicate on the "status" field.
-func StatusNEQ(v int) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldNEQ(FieldStatus, v))
+// LinkNEQ applies the NEQ predicate on the "link" field.
+func LinkNEQ(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldNEQ(FieldLink, v))
 }
 
-// StatusIn applies the In predicate on the "status" field.
-func StatusIn(vs ...int) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldIn(FieldStatus, vs...))
+// LinkIn applies the In predicate on the "link" field.
+func LinkIn(vs ...string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldIn(FieldLink, vs...))
 }
 
-// StatusNotIn applies the NotIn predicate on the "status" field.
-func StatusNotIn(vs ...int) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldNotIn(FieldStatus, vs...))
+// LinkNotIn applies the NotIn predicate on the "link" field.
+func LinkNotIn(vs ...string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldNotIn(FieldLink, vs...))
 }
 
-// StatusGT applies the GT predicate on the "status" field.
-func StatusGT(v int) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldGT(FieldStatus, v))
+// LinkGT applies the GT predicate on the "link" field.
+func LinkGT(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldGT(FieldLink, v))
 }
 
-// StatusGTE applies the GTE predicate on the "status" field.
-func StatusGTE(v int) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldGTE(FieldStatus, v))
+// LinkGTE applies the GTE predicate on the "link" field.
+func LinkGTE(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldGTE(FieldLink, v))
 }
 
-// StatusLT applies the LT predicate on the "status" field.
-func StatusLT(v int) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldLT(FieldStatus, v))
+// LinkLT applies the LT predicate on the "link" field.
+func LinkLT(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldLT(FieldLink, v))
 }
 
-// StatusLTE applies the LTE predicate on the "status" field.
-func StatusLTE(v int) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldLTE(FieldStatus, v))
+// LinkLTE applies the LTE predicate on the "link" field.
+func LinkLTE(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldLTE(FieldLink, v))
+}
+
+// LinkContains applies the Contains predicate on the "link" field.
+func LinkContains(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldContains(FieldLink, v))
+}
+
+// LinkHasPrefix applies the HasPrefix predicate on the "link" field.
+func LinkHasPrefix(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldHasPrefix(FieldLink, v))
+}
+
+// LinkHasSuffix applies the HasSuffix predicate on the "link" field.
+func LinkHasSuffix(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldHasSuffix(FieldLink, v))
+}
+
+// LinkEqualFold applies the EqualFold predicate on the "link" field.
+func LinkEqualFold(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldEqualFold(FieldLink, v))
+}
+
+// LinkContainsFold applies the ContainsFold predicate on the "link" field.
+func LinkContainsFold(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldContainsFold(FieldLink, v))
+}
+
+// TimeEQ applies the EQ predicate on the "time" field.
+func TimeEQ(v time.Time) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldEQ(FieldTime, v))
+}
+
+// TimeNEQ applies the NEQ predicate on the "time" field.
+func TimeNEQ(v time.Time) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldNEQ(FieldTime, v))
+}
+
+// TimeIn applies the In predicate on the "time" field.
+func TimeIn(vs ...time.Time) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldIn(FieldTime, vs...))
+}
+
+// TimeNotIn applies the NotIn predicate on the "time" field.
+func TimeNotIn(vs ...time.Time) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldNotIn(FieldTime, vs...))
+}
+
+// TimeGT applies the GT predicate on the "time" field.
+func TimeGT(v time.Time) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldGT(FieldTime, v))
+}
+
+// TimeGTE applies the GTE predicate on the "time" field.
+func TimeGTE(v time.Time) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldGTE(FieldTime, v))
+}
+
+// TimeLT applies the LT predicate on the "time" field.
+func TimeLT(v time.Time) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldLT(FieldTime, v))
+}
+
+// TimeLTE applies the LTE predicate on the "time" field.
+func TimeLTE(v time.Time) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldLTE(FieldTime, v))
+}
+
+// TicketUUIDEQ applies the EQ predicate on the "ticket_uuid" field.
+func TicketUUIDEQ(v uuid.UUID) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldEQ(FieldTicketUUID, v))
+}
+
+// TicketUUIDNEQ applies the NEQ predicate on the "ticket_uuid" field.
+func TicketUUIDNEQ(v uuid.UUID) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldNEQ(FieldTicketUUID, v))
+}
+
+// TicketUUIDIn applies the In predicate on the "ticket_uuid" field.
+func TicketUUIDIn(vs ...uuid.UUID) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldIn(FieldTicketUUID, vs...))
+}
+
+// TicketUUIDNotIn applies the NotIn predicate on the "ticket_uuid" field.
+func TicketUUIDNotIn(vs ...uuid.UUID) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldNotIn(FieldTicketUUID, vs...))
+}
+
+// TicketUUIDGT applies the GT predicate on the "ticket_uuid" field.
+func TicketUUIDGT(v uuid.UUID) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldGT(FieldTicketUUID, v))
+}
+
+// TicketUUIDGTE applies the GTE predicate on the "ticket_uuid" field.
+func TicketUUIDGTE(v uuid.UUID) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldGTE(FieldTicketUUID, v))
+}
+
+// TicketUUIDLT applies the LT predicate on the "ticket_uuid" field.
+func TicketUUIDLT(v uuid.UUID) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldLT(FieldTicketUUID, v))
+}
+
+// TicketUUIDLTE applies the LTE predicate on the "ticket_uuid" field.
+func TicketUUIDLTE(v uuid.UUID) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldLTE(FieldTicketUUID, v))
+}
+
+// SourceEQ applies the EQ predicate on the "source" field.
+func SourceEQ(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldEQ(FieldSource, v))
+}
+
+// SourceNEQ applies the NEQ predicate on the "source" field.
+func SourceNEQ(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldNEQ(FieldSource, v))
+}
+
+// SourceIn applies the In predicate on the "source" field.
+func SourceIn(vs ...string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldIn(FieldSource, vs...))
+}
+
+// SourceNotIn applies the NotIn predicate on the "source" field.
+func SourceNotIn(vs ...string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldNotIn(FieldSource, vs...))
+}
+
+// SourceGT applies the GT predicate on the "source" field.
+func SourceGT(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldGT(FieldSource, v))
+}
+
+// SourceGTE applies the GTE predicate on the "source" field.
+func SourceGTE(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldGTE(FieldSource, v))
+}
+
+// SourceLT applies the LT predicate on the "source" field.
+func SourceLT(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldLT(FieldSource, v))
+}
+
+// SourceLTE applies the LTE predicate on the "source" field.
+func SourceLTE(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldLTE(FieldSource, v))
+}
+
+// SourceContains applies the Contains predicate on the "source" field.
+func SourceContains(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldContains(FieldSource, v))
+}
+
+// SourceHasPrefix applies the HasPrefix predicate on the "source" field.
+func SourceHasPrefix(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldHasPrefix(FieldSource, v))
+}
+
+// SourceHasSuffix applies the HasSuffix predicate on the "source" field.
+func SourceHasSuffix(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldHasSuffix(FieldSource, v))
+}
+
+// SourceEqualFold applies the EqualFold predicate on the "source" field.
+func SourceEqualFold(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldEqualFold(FieldSource, v))
+}
+
+// SourceContainsFold applies the ContainsFold predicate on the "source" field.
+func SourceContainsFold(v string) predicate.ThreadModel {
+	return predicate.ThreadModel(sql.FieldContainsFold(FieldSource, v))
 }
 
 // And groups predicates with the AND operator between them.

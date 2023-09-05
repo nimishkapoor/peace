@@ -25,6 +25,8 @@ func (TicketModel) Fields() []ent.Field {
 		field.Int("severity"),
 		field.Int("status"),
 		field.Time("time"),
+		field.Int("client_priority"),
+		field.String("source"),
 	}
 }
 

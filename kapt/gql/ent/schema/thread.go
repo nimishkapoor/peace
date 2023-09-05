@@ -15,9 +15,10 @@ type ThreadModel struct {
 func (ThreadModel) Fields() []ent.Field {
 	return []ent.Field{
 		field.UUID("id", uuid.UUID{}).StorageKey("thread_id"),
-		field.String("body").
-			Unique(),
-		field.Int("status"),
+		field.String("body"),
+		field.Time("time"),
+		field.UUID("ticket_uuid", uuid.UUID{}),
+		field.String("source"),
 	}
 }
 

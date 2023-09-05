@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"kapt/kapt/gql/ent/threadmodel"
+	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -26,9 +27,27 @@ func (tmc *ThreadModelCreate) SetBody(s string) *ThreadModelCreate {
 	return tmc
 }
 
-// SetStatus sets the "status" field.
-func (tmc *ThreadModelCreate) SetStatus(i int) *ThreadModelCreate {
-	tmc.mutation.SetStatus(i)
+// SetLink sets the "link" field.
+func (tmc *ThreadModelCreate) SetLink(s string) *ThreadModelCreate {
+	tmc.mutation.SetLink(s)
+	return tmc
+}
+
+// SetTime sets the "time" field.
+func (tmc *ThreadModelCreate) SetTime(t time.Time) *ThreadModelCreate {
+	tmc.mutation.SetTime(t)
+	return tmc
+}
+
+// SetTicketUUID sets the "ticket_uuid" field.
+func (tmc *ThreadModelCreate) SetTicketUUID(u uuid.UUID) *ThreadModelCreate {
+	tmc.mutation.SetTicketUUID(u)
+	return tmc
+}
+
+// SetSource sets the "source" field.
+func (tmc *ThreadModelCreate) SetSource(s string) *ThreadModelCreate {
+	tmc.mutation.SetSource(s)
 	return tmc
 }
 
@@ -75,8 +94,17 @@ func (tmc *ThreadModelCreate) check() error {
 	if _, ok := tmc.mutation.Body(); !ok {
 		return &ValidationError{Name: "body", err: errors.New(`ent: missing required field "ThreadModel.body"`)}
 	}
-	if _, ok := tmc.mutation.Status(); !ok {
-		return &ValidationError{Name: "status", err: errors.New(`ent: missing required field "ThreadModel.status"`)}
+	if _, ok := tmc.mutation.Link(); !ok {
+		return &ValidationError{Name: "link", err: errors.New(`ent: missing required field "ThreadModel.link"`)}
+	}
+	if _, ok := tmc.mutation.Time(); !ok {
+		return &ValidationError{Name: "time", err: errors.New(`ent: missing required field "ThreadModel.time"`)}
+	}
+	if _, ok := tmc.mutation.TicketUUID(); !ok {
+		return &ValidationError{Name: "ticket_uuid", err: errors.New(`ent: missing required field "ThreadModel.ticket_uuid"`)}
+	}
+	if _, ok := tmc.mutation.Source(); !ok {
+		return &ValidationError{Name: "source", err: errors.New(`ent: missing required field "ThreadModel.source"`)}
 	}
 	return nil
 }
@@ -117,9 +145,21 @@ func (tmc *ThreadModelCreate) createSpec() (*ThreadModel, *sqlgraph.CreateSpec) 
 		_spec.SetField(threadmodel.FieldBody, field.TypeString, value)
 		_node.Body = value
 	}
-	if value, ok := tmc.mutation.Status(); ok {
-		_spec.SetField(threadmodel.FieldStatus, field.TypeInt, value)
-		_node.Status = value
+	if value, ok := tmc.mutation.Link(); ok {
+		_spec.SetField(threadmodel.FieldLink, field.TypeString, value)
+		_node.Link = value
+	}
+	if value, ok := tmc.mutation.Time(); ok {
+		_spec.SetField(threadmodel.FieldTime, field.TypeTime, value)
+		_node.Time = value
+	}
+	if value, ok := tmc.mutation.TicketUUID(); ok {
+		_spec.SetField(threadmodel.FieldTicketUUID, field.TypeUUID, value)
+		_node.TicketUUID = value
+	}
+	if value, ok := tmc.mutation.Source(); ok {
+		_spec.SetField(threadmodel.FieldSource, field.TypeString, value)
+		_node.Source = value
 	}
 	return _node, _spec
 }

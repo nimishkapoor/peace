@@ -13,8 +13,14 @@ const (
 	FieldID = "thread_id"
 	// FieldBody holds the string denoting the body field in the database.
 	FieldBody = "body"
-	// FieldStatus holds the string denoting the status field in the database.
-	FieldStatus = "status"
+	// FieldLink holds the string denoting the link field in the database.
+	FieldLink = "link"
+	// FieldTime holds the string denoting the time field in the database.
+	FieldTime = "time"
+	// FieldTicketUUID holds the string denoting the ticket_uuid field in the database.
+	FieldTicketUUID = "ticket_uuid"
+	// FieldSource holds the string denoting the source field in the database.
+	FieldSource = "source"
 	// Table holds the table name of the threadmodel in the database.
 	Table = "thread_models"
 )
@@ -23,7 +29,10 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldBody,
-	FieldStatus,
+	FieldLink,
+	FieldTime,
+	FieldTicketUUID,
+	FieldSource,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -49,7 +58,22 @@ func ByBody(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldBody, opts...).ToFunc()
 }
 
-// ByStatus orders the results by the status field.
-func ByStatus(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldStatus, opts...).ToFunc()
+// ByLink orders the results by the link field.
+func ByLink(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldLink, opts...).ToFunc()
+}
+
+// ByTime orders the results by the time field.
+func ByTime(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTime, opts...).ToFunc()
+}
+
+// ByTicketUUID orders the results by the ticket_uuid field.
+func ByTicketUUID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldTicketUUID, opts...).ToFunc()
+}
+
+// BySource orders the results by the source field.
+func BySource(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldSource, opts...).ToFunc()
 }

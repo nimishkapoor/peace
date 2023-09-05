@@ -8,10 +8,12 @@ import (
 	"fmt"
 	"kapt/kapt/gql/ent/predicate"
 	"kapt/kapt/gql/ent/threadmodel"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/google/uuid"
 )
 
 // ThreadModelUpdate is the builder for updating ThreadModel entities.
@@ -33,16 +35,27 @@ func (tmu *ThreadModelUpdate) SetBody(s string) *ThreadModelUpdate {
 	return tmu
 }
 
-// SetStatus sets the "status" field.
-func (tmu *ThreadModelUpdate) SetStatus(i int) *ThreadModelUpdate {
-	tmu.mutation.ResetStatus()
-	tmu.mutation.SetStatus(i)
+// SetLink sets the "link" field.
+func (tmu *ThreadModelUpdate) SetLink(s string) *ThreadModelUpdate {
+	tmu.mutation.SetLink(s)
 	return tmu
 }
 
-// AddStatus adds i to the "status" field.
-func (tmu *ThreadModelUpdate) AddStatus(i int) *ThreadModelUpdate {
-	tmu.mutation.AddStatus(i)
+// SetTime sets the "time" field.
+func (tmu *ThreadModelUpdate) SetTime(t time.Time) *ThreadModelUpdate {
+	tmu.mutation.SetTime(t)
+	return tmu
+}
+
+// SetTicketUUID sets the "ticket_uuid" field.
+func (tmu *ThreadModelUpdate) SetTicketUUID(u uuid.UUID) *ThreadModelUpdate {
+	tmu.mutation.SetTicketUUID(u)
+	return tmu
+}
+
+// SetSource sets the "source" field.
+func (tmu *ThreadModelUpdate) SetSource(s string) *ThreadModelUpdate {
+	tmu.mutation.SetSource(s)
 	return tmu
 }
 
@@ -90,11 +103,17 @@ func (tmu *ThreadModelUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := tmu.mutation.Body(); ok {
 		_spec.SetField(threadmodel.FieldBody, field.TypeString, value)
 	}
-	if value, ok := tmu.mutation.Status(); ok {
-		_spec.SetField(threadmodel.FieldStatus, field.TypeInt, value)
+	if value, ok := tmu.mutation.Link(); ok {
+		_spec.SetField(threadmodel.FieldLink, field.TypeString, value)
 	}
-	if value, ok := tmu.mutation.AddedStatus(); ok {
-		_spec.AddField(threadmodel.FieldStatus, field.TypeInt, value)
+	if value, ok := tmu.mutation.Time(); ok {
+		_spec.SetField(threadmodel.FieldTime, field.TypeTime, value)
+	}
+	if value, ok := tmu.mutation.TicketUUID(); ok {
+		_spec.SetField(threadmodel.FieldTicketUUID, field.TypeUUID, value)
+	}
+	if value, ok := tmu.mutation.Source(); ok {
+		_spec.SetField(threadmodel.FieldSource, field.TypeString, value)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, tmu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -122,16 +141,27 @@ func (tmuo *ThreadModelUpdateOne) SetBody(s string) *ThreadModelUpdateOne {
 	return tmuo
 }
 
-// SetStatus sets the "status" field.
-func (tmuo *ThreadModelUpdateOne) SetStatus(i int) *ThreadModelUpdateOne {
-	tmuo.mutation.ResetStatus()
-	tmuo.mutation.SetStatus(i)
+// SetLink sets the "link" field.
+func (tmuo *ThreadModelUpdateOne) SetLink(s string) *ThreadModelUpdateOne {
+	tmuo.mutation.SetLink(s)
 	return tmuo
 }
 
-// AddStatus adds i to the "status" field.
-func (tmuo *ThreadModelUpdateOne) AddStatus(i int) *ThreadModelUpdateOne {
-	tmuo.mutation.AddStatus(i)
+// SetTime sets the "time" field.
+func (tmuo *ThreadModelUpdateOne) SetTime(t time.Time) *ThreadModelUpdateOne {
+	tmuo.mutation.SetTime(t)
+	return tmuo
+}
+
+// SetTicketUUID sets the "ticket_uuid" field.
+func (tmuo *ThreadModelUpdateOne) SetTicketUUID(u uuid.UUID) *ThreadModelUpdateOne {
+	tmuo.mutation.SetTicketUUID(u)
+	return tmuo
+}
+
+// SetSource sets the "source" field.
+func (tmuo *ThreadModelUpdateOne) SetSource(s string) *ThreadModelUpdateOne {
+	tmuo.mutation.SetSource(s)
 	return tmuo
 }
 
@@ -209,11 +239,17 @@ func (tmuo *ThreadModelUpdateOne) sqlSave(ctx context.Context) (_node *ThreadMod
 	if value, ok := tmuo.mutation.Body(); ok {
 		_spec.SetField(threadmodel.FieldBody, field.TypeString, value)
 	}
-	if value, ok := tmuo.mutation.Status(); ok {
-		_spec.SetField(threadmodel.FieldStatus, field.TypeInt, value)
+	if value, ok := tmuo.mutation.Link(); ok {
+		_spec.SetField(threadmodel.FieldLink, field.TypeString, value)
 	}
-	if value, ok := tmuo.mutation.AddedStatus(); ok {
-		_spec.AddField(threadmodel.FieldStatus, field.TypeInt, value)
+	if value, ok := tmuo.mutation.Time(); ok {
+		_spec.SetField(threadmodel.FieldTime, field.TypeTime, value)
+	}
+	if value, ok := tmuo.mutation.TicketUUID(); ok {
+		_spec.SetField(threadmodel.FieldTicketUUID, field.TypeUUID, value)
+	}
+	if value, ok := tmuo.mutation.Source(); ok {
+		_spec.SetField(threadmodel.FieldSource, field.TypeString, value)
 	}
 	_node = &ThreadModel{config: tmuo.config}
 	_spec.Assign = _node.assignValues

@@ -28,25 +28,25 @@ func NewHTTPServer(ctx context.Context, endpoints Endpoints) http.Handler {
 
 	r.Methods("Post").Path("/tickets").Handler(httptransport.NewServer(
 		endpoints.GetTickets,
-		decodeGetPollsReq,
+		decodeGetTicketReq,
 		encodeResponse,
 	))
 
 	r.Methods("Post").Path("/create-ticket").Handler(httptransport.NewServer(
 		endpoints.CreateTicket,
-		decodeCreatePollReq,
+		decodeCreateTicketReq,
 		encodeResponse,
 	))
 
 	r.Methods("Post").Path("/update-ticket").Handler(httptransport.NewServer(
 		endpoints.UpdateTicket,
-		decodeVoteReq,
+		decodeUpdateTicketReq,
 		encodeResponse,
 	))
 
 	r.Methods("Post").Path("/delete-ticket").Handler(httptransport.NewServer(
 		endpoints.DeleteTicket,
-		decodeVotedByReq,
+		decodeDeleteTicketReq,
 		encodeResponse,
 	))
 
@@ -54,6 +54,42 @@ func NewHTTPServer(ctx context.Context, endpoints Endpoints) http.Handler {
 		endpoints.GraphQL,
 		decodeGraphQLReq,
 		encodeGraphQLResponse,
+	))
+
+	r.Methods("Post").Path("/create-categoty").Handler(httptransport.NewServer(
+		endpoints.CreateCategory,
+		decodeCreateCategoryReq,
+		encodeResponse,
+	))
+
+	r.Methods("Post").Path("/delete-categoty").Handler(httptransport.NewServer(
+		endpoints.DeleteCategory,
+		decodeDeleteCategoryReq,
+		encodeResponse,
+	))
+
+	r.Methods("Post").Path("/create-comment").Handler(httptransport.NewServer(
+		endpoints.CreateComment,
+		decodeCreateCommentReq,
+		encodeResponse,
+	))
+
+	r.Methods("Post").Path("/update-comment").Handler(httptransport.NewServer(
+		endpoints.UpdateComment,
+		decodeUpdateCommentReq,
+		encodeResponse,
+	))
+
+	r.Methods("Post").Path("/delete-comment").Handler(httptransport.NewServer(
+		endpoints.DeleteComment,
+		decodeDeleteCommentReq,
+		encodeResponse,
+	))
+
+	r.Methods("Post").Path("/get-comments").Handler(httptransport.NewServer(
+		endpoints.GetComments,
+		decodeGetCommentsReq,
+		encodeResponse,
 	))
 
 	return r

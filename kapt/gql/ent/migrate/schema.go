@@ -47,8 +47,11 @@ var (
 	// ThreadModelsColumns holds the columns for the "thread_models" table.
 	ThreadModelsColumns = []*schema.Column{
 		{Name: "thread_id", Type: field.TypeUUID},
-		{Name: "body", Type: field.TypeString, Unique: true},
-		{Name: "status", Type: field.TypeInt},
+		{Name: "body", Type: field.TypeString},
+		{Name: "link", Type: field.TypeString},
+		{Name: "time", Type: field.TypeTime},
+		{Name: "ticket_uuid", Type: field.TypeUUID},
+		{Name: "source", Type: field.TypeString},
 	}
 	// ThreadModelsTable holds the schema information for the "thread_models" table.
 	ThreadModelsTable = &schema.Table{
@@ -69,6 +72,8 @@ var (
 		{Name: "severity", Type: field.TypeInt},
 		{Name: "status", Type: field.TypeInt},
 		{Name: "time", Type: field.TypeTime},
+		{Name: "client_priority", Type: field.TypeInt},
+		{Name: "source", Type: field.TypeString},
 	}
 	// TicketModelsTable holds the schema information for the "ticket_models" table.
 	TicketModelsTable = &schema.Table{

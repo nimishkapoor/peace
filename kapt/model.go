@@ -2,6 +2,7 @@ package kapt
 
 import (
 	"context"
+	"net/http"
 
 	uuid "github.com/google/uuid"
 )
@@ -14,26 +15,28 @@ type Tenant struct {
 }
 
 type User struct {
-	UserID    uuid.UUID `json:"user_id"`
-	UserName  string    `json:"user_name"`
-	Password  string    `json:"password"`
-	TenantID  uuid.UUID `json:"tenant_id"`
-	Role      string    `json:"role"`
-	UserEmail string    `json:"email"`
+	UserID       uuid.UUID `json:"user_id"`
+	UserName     string    `json:"user_name"`
+	Password     string    `json:"password"`
+	TenantID     uuid.UUID `json:"tenant_id"`
+	Role         string    `json:"role"`
+	UserEmail    string    `json:"email"`
+	UserPriority int       `json:"user_priority"`
 }
 
 type Ticket struct {
-	TicketId    uuid.UUID     `json:"ticket_id"`
-	UserID      uuid.UUID     `json:"user_id"`
-	TenantID    uuid.UUID     `json:"tenant_id"`
-	Subject     string        `json:"subject"`
-	Body        string        `json:"body"`
-	Category    uuid.UUID     `json:"category"`
-	Severity    int           `json:"severity"`
-	Assignee    uuid.UUID     `json:"asignee"`
-	Label       string        `json:"label"`
-	Status      int           `json:"status"`
-	Attachments []*Attachment `json:"attachments"`
+	TicketId       uuid.UUID `json:"ticket_id"`
+	UserID         uuid.UUID `json:"user_id"`
+	TenantID       uuid.UUID `json:"tenant_id"`
+	Subject        string    `json:"subject"`
+	Body           string    `json:"body"`
+	Category       uuid.UUID `json:"category"`
+	Severity       int       `json:"severity"`
+	Assignee       uuid.UUID `json:"asignee"`
+	Label          string    `json:"label"`
+	Status         int       `json:"status"`
+	ClientPriority int       `json:"client_priority"`
+	Source         string    `json:"source"`
 }
 
 type Category struct {
@@ -48,10 +51,15 @@ type Attachment struct {
 	TicketID     uuid.UUID `json:"ticket_id"`
 }
 
+type Comment struct {
+	CommentID  uuid.UUID  `json:"comment_id"`
+	Body       string     `json:"body"`
+	TicketID   uuid.UUID  `json:"ticket_id"`
+	Attachment Attachment `json:"attachment"`
+}
+
 type Repository interface {
 	CreateNewUser(ctx context.Context, user User) (string, error)
-	CreateNewTenant(ctx context.Context, tenant Tenant, user User) (string, error)
-	UpdateTenant(ctx context.Context, tenant Tenant, token string) (string, error)
 	UpdateUser(ctx context.Context, user User, token string) (string, error)
 	AuthLogin(ctx context.Context, user User) (string, error)
 	GetTickets(ctx context.Context, token string) ([]*Ticket, error)
@@ -59,5 +67,13 @@ type Repository interface {
 	UpdateTicket(ctx context.Context, token string, ticketid string, ticket Ticket) (string, error)
 	CreateCategory(ctx context.Context, token string, category Category) (string, error)
 	UpdateCategory(ctx context.Context, token string, category Category) (string, error)
+	GetCategories(ctx context.Context, token string) ([]*Category, error)
+	CreateComment(ctx context.Context, token string, category Category) (string, error)
+	UpdateComment(ctx context.Context, token string, category Category) (string, error)
+	GetComments(ctx context.Context, token string) ([]*Category, error)
 	StoreAttachment(ctx context.Context, token string, attachemt Attachment) (string, error)
+	DeleteTicket(ctx context.Context, token string) (string, error)
+	DeleteCategory(ctx context.Context, token string) (string, error)
+	DeleteComment(ctx context.Context, token string) (string, error)
+	GraphQL(ctx context.Context, body *http.Request) (QueryResponse, error)
 }

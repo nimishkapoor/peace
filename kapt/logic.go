@@ -71,7 +71,7 @@ func (s service) GetTickets(ctx context.Context, token string) ([]*Ticket, error
 
 func (s service) CreateTicket(ctx context.Context, token string, Subject string, Category string, Body string, Severity string) (string, error) {
 	logger := log.With(s.logger, "method", "CreateTicket")
-	_, err := s.repository.CreatePoll(ctx, token, Subject, Subject, Category, Body, Severity)
+	_, err := s.repository.CreateTicket(ctx, token, Subject, Subject, Category, Body, Severity)
 	if err != nil {
 		level.Error(logger).Log("err", err)
 		return "", err
@@ -82,7 +82,7 @@ func (s service) CreateTicket(ctx context.Context, token string, Subject string,
 
 func (s service) UpdateTicket(ctx context.Context, token string, optid int) (string, error) {
 	logger := log.With(s.logger, "method", "UpdateTicket")
-	_, err := s.repository.UpdateTicket(ctx, token, optid)
+	_, err := s.repository.UpdateTicket(ctx, token, ticketID, Subject, Category, Body, Severity)
 	if err != nil {
 		level.Error(logger).Log("err", err)
 		return "", err
@@ -93,7 +93,7 @@ func (s service) UpdateTicket(ctx context.Context, token string, optid int) (str
 
 func (s service) DeleteTicket(ctx context.Context, token string, optid int) ([]string, error) {
 	logger := log.With(s.logger, "method", "DeleteTicket")
-	voters, err := s.repository.VotedBy(ctx, token, optid)
+	voters, err := s.repository.DeleteTicket(ctx, token, ticketID)
 	if err != nil {
 		level.Error(logger).Log("err", err)
 		return nil, err

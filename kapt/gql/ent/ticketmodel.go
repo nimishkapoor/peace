@@ -37,7 +37,11 @@ type TicketModel struct {
 	// Status holds the value of the "status" field.
 	Status int `json:"status,omitempty"`
 	// Time holds the value of the "time" field.
-	Time         time.Time `json:"time,omitempty"`
+	Time time.Time `json:"time,omitempty"`
+	// ClientPriority holds the value of the "client_priority" field.
+	ClientPriority int `json:"client_priority,omitempty"`
+	// Source holds the value of the "source" field.
+	Source       string `json:"source,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -46,9 +50,9 @@ func (*TicketModel) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case ticketmodel.FieldSeverity, ticketmodel.FieldStatus:
+		case ticketmodel.FieldSeverity, ticketmodel.FieldStatus, ticketmodel.FieldClientPriority:
 			values[i] = new(sql.NullInt64)
-		case ticketmodel.FieldSubject, ticketmodel.FieldBody, ticketmodel.FieldLabel:
+		case ticketmodel.FieldSubject, ticketmodel.FieldBody, ticketmodel.FieldLabel, ticketmodel.FieldSource:
 			values[i] = new(sql.NullString)
 		case ticketmodel.FieldTime:
 			values[i] = new(sql.NullTime)
@@ -135,6 +139,18 @@ func (tm *TicketModel) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				tm.Time = value.Time
 			}
+		case ticketmodel.FieldClientPriority:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for field client_priority", values[i])
+			} else if value.Valid {
+				tm.ClientPriority = int(value.Int64)
+			}
+		case ticketmodel.FieldSource:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field source", values[i])
+			} else if value.Valid {
+				tm.Source = value.String
+			}
 		default:
 			tm.selectValues.Set(columns[i], values[i])
 		}
@@ -200,6 +216,12 @@ func (tm *TicketModel) String() string {
 	builder.WriteString(", ")
 	builder.WriteString("time=")
 	builder.WriteString(tm.Time.Format(time.ANSIC))
+	builder.WriteString(", ")
+	builder.WriteString("client_priority=")
+	builder.WriteString(fmt.Sprintf("%v", tm.ClientPriority))
+	builder.WriteString(", ")
+	builder.WriteString("source=")
+	builder.WriteString(tm.Source)
 	builder.WriteByte(')')
 	return builder.String()
 }

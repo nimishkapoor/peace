@@ -100,6 +100,16 @@ func Time(v time.Time) predicate.TicketModel {
 	return predicate.TicketModel(sql.FieldEQ(FieldTime, v))
 }
 
+// ClientPriority applies equality check predicate on the "client_priority" field. It's identical to ClientPriorityEQ.
+func ClientPriority(v int) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldEQ(FieldClientPriority, v))
+}
+
+// Source applies equality check predicate on the "source" field. It's identical to SourceEQ.
+func Source(v string) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldEQ(FieldSource, v))
+}
+
 // UserIDEQ applies the EQ predicate on the "user_id" field.
 func UserIDEQ(v uuid.UUID) predicate.TicketModel {
 	return predicate.TicketModel(sql.FieldEQ(FieldUserID, v))
@@ -573,6 +583,111 @@ func TimeLT(v time.Time) predicate.TicketModel {
 // TimeLTE applies the LTE predicate on the "time" field.
 func TimeLTE(v time.Time) predicate.TicketModel {
 	return predicate.TicketModel(sql.FieldLTE(FieldTime, v))
+}
+
+// ClientPriorityEQ applies the EQ predicate on the "client_priority" field.
+func ClientPriorityEQ(v int) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldEQ(FieldClientPriority, v))
+}
+
+// ClientPriorityNEQ applies the NEQ predicate on the "client_priority" field.
+func ClientPriorityNEQ(v int) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldNEQ(FieldClientPriority, v))
+}
+
+// ClientPriorityIn applies the In predicate on the "client_priority" field.
+func ClientPriorityIn(vs ...int) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldIn(FieldClientPriority, vs...))
+}
+
+// ClientPriorityNotIn applies the NotIn predicate on the "client_priority" field.
+func ClientPriorityNotIn(vs ...int) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldNotIn(FieldClientPriority, vs...))
+}
+
+// ClientPriorityGT applies the GT predicate on the "client_priority" field.
+func ClientPriorityGT(v int) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldGT(FieldClientPriority, v))
+}
+
+// ClientPriorityGTE applies the GTE predicate on the "client_priority" field.
+func ClientPriorityGTE(v int) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldGTE(FieldClientPriority, v))
+}
+
+// ClientPriorityLT applies the LT predicate on the "client_priority" field.
+func ClientPriorityLT(v int) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldLT(FieldClientPriority, v))
+}
+
+// ClientPriorityLTE applies the LTE predicate on the "client_priority" field.
+func ClientPriorityLTE(v int) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldLTE(FieldClientPriority, v))
+}
+
+// SourceEQ applies the EQ predicate on the "source" field.
+func SourceEQ(v string) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldEQ(FieldSource, v))
+}
+
+// SourceNEQ applies the NEQ predicate on the "source" field.
+func SourceNEQ(v string) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldNEQ(FieldSource, v))
+}
+
+// SourceIn applies the In predicate on the "source" field.
+func SourceIn(vs ...string) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldIn(FieldSource, vs...))
+}
+
+// SourceNotIn applies the NotIn predicate on the "source" field.
+func SourceNotIn(vs ...string) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldNotIn(FieldSource, vs...))
+}
+
+// SourceGT applies the GT predicate on the "source" field.
+func SourceGT(v string) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldGT(FieldSource, v))
+}
+
+// SourceGTE applies the GTE predicate on the "source" field.
+func SourceGTE(v string) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldGTE(FieldSource, v))
+}
+
+// SourceLT applies the LT predicate on the "source" field.
+func SourceLT(v string) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldLT(FieldSource, v))
+}
+
+// SourceLTE applies the LTE predicate on the "source" field.
+func SourceLTE(v string) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldLTE(FieldSource, v))
+}
+
+// SourceContains applies the Contains predicate on the "source" field.
+func SourceContains(v string) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldContains(FieldSource, v))
+}
+
+// SourceHasPrefix applies the HasPrefix predicate on the "source" field.
+func SourceHasPrefix(v string) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldHasPrefix(FieldSource, v))
+}
+
+// SourceHasSuffix applies the HasSuffix predicate on the "source" field.
+func SourceHasSuffix(v string) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldHasSuffix(FieldSource, v))
+}
+
+// SourceEqualFold applies the EqualFold predicate on the "source" field.
+func SourceEqualFold(v string) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldEqualFold(FieldSource, v))
+}
+
+// SourceContainsFold applies the ContainsFold predicate on the "source" field.
+func SourceContainsFold(v string) predicate.TicketModel {
+	return predicate.TicketModel(sql.FieldContainsFold(FieldSource, v))
 }
 
 // And groups predicates with the AND operator between them.
