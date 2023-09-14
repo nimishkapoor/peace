@@ -19,8 +19,8 @@ type AttachmentModel struct {
 	ID uuid.UUID `json:"id,omitempty"`
 	// Link holds the value of the "link" field.
 	Link string `json:"link,omitempty"`
-	// TicketID holds the value of the "ticket_id" field.
-	TicketID     uuid.UUID `json:"ticket_id,omitempty"`
+	// ThreadID holds the value of the "thread_id" field.
+	ThreadID     uuid.UUID `json:"thread_id,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -31,7 +31,7 @@ func (*AttachmentModel) scanValues(columns []string) ([]any, error) {
 		switch columns[i] {
 		case attachmentmodel.FieldLink:
 			values[i] = new(sql.NullString)
-		case attachmentmodel.FieldID, attachmentmodel.FieldTicketID:
+		case attachmentmodel.FieldID, attachmentmodel.FieldThreadID:
 			values[i] = new(uuid.UUID)
 		default:
 			values[i] = new(sql.UnknownType)
@@ -60,11 +60,11 @@ func (am *AttachmentModel) assignValues(columns []string, values []any) error {
 			} else if value.Valid {
 				am.Link = value.String
 			}
-		case attachmentmodel.FieldTicketID:
+		case attachmentmodel.FieldThreadID:
 			if value, ok := values[i].(*uuid.UUID); !ok {
-				return fmt.Errorf("unexpected type %T for field ticket_id", values[i])
+				return fmt.Errorf("unexpected type %T for field thread_id", values[i])
 			} else if value != nil {
-				am.TicketID = *value
+				am.ThreadID = *value
 			}
 		default:
 			am.selectValues.Set(columns[i], values[i])
@@ -105,8 +105,8 @@ func (am *AttachmentModel) String() string {
 	builder.WriteString("link=")
 	builder.WriteString(am.Link)
 	builder.WriteString(", ")
-	builder.WriteString("ticket_id=")
-	builder.WriteString(fmt.Sprintf("%v", am.TicketID))
+	builder.WriteString("thread_id=")
+	builder.WriteString(fmt.Sprintf("%v", am.ThreadID))
 	builder.WriteByte(')')
 	return builder.String()
 }

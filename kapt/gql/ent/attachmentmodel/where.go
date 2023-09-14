@@ -59,9 +59,9 @@ func Link(v string) predicate.AttachmentModel {
 	return predicate.AttachmentModel(sql.FieldEQ(FieldLink, v))
 }
 
-// TicketID applies equality check predicate on the "ticket_id" field. It's identical to TicketIDEQ.
-func TicketID(v uuid.UUID) predicate.AttachmentModel {
-	return predicate.AttachmentModel(sql.FieldEQ(FieldTicketID, v))
+// ThreadID applies equality check predicate on the "thread_id" field. It's identical to ThreadIDEQ.
+func ThreadID(v uuid.UUID) predicate.AttachmentModel {
+	return predicate.AttachmentModel(sql.FieldEQ(FieldThreadID, v))
 }
 
 // LinkEQ applies the EQ predicate on the "link" field.
@@ -129,44 +129,44 @@ func LinkContainsFold(v string) predicate.AttachmentModel {
 	return predicate.AttachmentModel(sql.FieldContainsFold(FieldLink, v))
 }
 
-// TicketIDEQ applies the EQ predicate on the "ticket_id" field.
-func TicketIDEQ(v uuid.UUID) predicate.AttachmentModel {
-	return predicate.AttachmentModel(sql.FieldEQ(FieldTicketID, v))
+// ThreadIDEQ applies the EQ predicate on the "thread_id" field.
+func ThreadIDEQ(v uuid.UUID) predicate.AttachmentModel {
+	return predicate.AttachmentModel(sql.FieldEQ(FieldThreadID, v))
 }
 
-// TicketIDNEQ applies the NEQ predicate on the "ticket_id" field.
-func TicketIDNEQ(v uuid.UUID) predicate.AttachmentModel {
-	return predicate.AttachmentModel(sql.FieldNEQ(FieldTicketID, v))
+// ThreadIDNEQ applies the NEQ predicate on the "thread_id" field.
+func ThreadIDNEQ(v uuid.UUID) predicate.AttachmentModel {
+	return predicate.AttachmentModel(sql.FieldNEQ(FieldThreadID, v))
 }
 
-// TicketIDIn applies the In predicate on the "ticket_id" field.
-func TicketIDIn(vs ...uuid.UUID) predicate.AttachmentModel {
-	return predicate.AttachmentModel(sql.FieldIn(FieldTicketID, vs...))
+// ThreadIDIn applies the In predicate on the "thread_id" field.
+func ThreadIDIn(vs ...uuid.UUID) predicate.AttachmentModel {
+	return predicate.AttachmentModel(sql.FieldIn(FieldThreadID, vs...))
 }
 
-// TicketIDNotIn applies the NotIn predicate on the "ticket_id" field.
-func TicketIDNotIn(vs ...uuid.UUID) predicate.AttachmentModel {
-	return predicate.AttachmentModel(sql.FieldNotIn(FieldTicketID, vs...))
+// ThreadIDNotIn applies the NotIn predicate on the "thread_id" field.
+func ThreadIDNotIn(vs ...uuid.UUID) predicate.AttachmentModel {
+	return predicate.AttachmentModel(sql.FieldNotIn(FieldThreadID, vs...))
 }
 
-// TicketIDGT applies the GT predicate on the "ticket_id" field.
-func TicketIDGT(v uuid.UUID) predicate.AttachmentModel {
-	return predicate.AttachmentModel(sql.FieldGT(FieldTicketID, v))
+// ThreadIDGT applies the GT predicate on the "thread_id" field.
+func ThreadIDGT(v uuid.UUID) predicate.AttachmentModel {
+	return predicate.AttachmentModel(sql.FieldGT(FieldThreadID, v))
 }
 
-// TicketIDGTE applies the GTE predicate on the "ticket_id" field.
-func TicketIDGTE(v uuid.UUID) predicate.AttachmentModel {
-	return predicate.AttachmentModel(sql.FieldGTE(FieldTicketID, v))
+// ThreadIDGTE applies the GTE predicate on the "thread_id" field.
+func ThreadIDGTE(v uuid.UUID) predicate.AttachmentModel {
+	return predicate.AttachmentModel(sql.FieldGTE(FieldThreadID, v))
 }
 
-// TicketIDLT applies the LT predicate on the "ticket_id" field.
-func TicketIDLT(v uuid.UUID) predicate.AttachmentModel {
-	return predicate.AttachmentModel(sql.FieldLT(FieldTicketID, v))
+// ThreadIDLT applies the LT predicate on the "thread_id" field.
+func ThreadIDLT(v uuid.UUID) predicate.AttachmentModel {
+	return predicate.AttachmentModel(sql.FieldLT(FieldThreadID, v))
 }
 
-// TicketIDLTE applies the LTE predicate on the "ticket_id" field.
-func TicketIDLTE(v uuid.UUID) predicate.AttachmentModel {
-	return predicate.AttachmentModel(sql.FieldLTE(FieldTicketID, v))
+// ThreadIDLTE applies the LTE predicate on the "thread_id" field.
+func ThreadIDLTE(v uuid.UUID) predicate.AttachmentModel {
+	return predicate.AttachmentModel(sql.FieldLTE(FieldThreadID, v))
 }
 
 // And groups predicates with the AND operator between them.

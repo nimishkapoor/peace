@@ -27,12 +27,6 @@ func (tmc *ThreadModelCreate) SetBody(s string) *ThreadModelCreate {
 	return tmc
 }
 
-// SetLink sets the "link" field.
-func (tmc *ThreadModelCreate) SetLink(s string) *ThreadModelCreate {
-	tmc.mutation.SetLink(s)
-	return tmc
-}
-
 // SetTime sets the "time" field.
 func (tmc *ThreadModelCreate) SetTime(t time.Time) *ThreadModelCreate {
 	tmc.mutation.SetTime(t)
@@ -94,9 +88,6 @@ func (tmc *ThreadModelCreate) check() error {
 	if _, ok := tmc.mutation.Body(); !ok {
 		return &ValidationError{Name: "body", err: errors.New(`ent: missing required field "ThreadModel.body"`)}
 	}
-	if _, ok := tmc.mutation.Link(); !ok {
-		return &ValidationError{Name: "link", err: errors.New(`ent: missing required field "ThreadModel.link"`)}
-	}
 	if _, ok := tmc.mutation.Time(); !ok {
 		return &ValidationError{Name: "time", err: errors.New(`ent: missing required field "ThreadModel.time"`)}
 	}
@@ -144,10 +135,6 @@ func (tmc *ThreadModelCreate) createSpec() (*ThreadModel, *sqlgraph.CreateSpec) 
 	if value, ok := tmc.mutation.Body(); ok {
 		_spec.SetField(threadmodel.FieldBody, field.TypeString, value)
 		_node.Body = value
-	}
-	if value, ok := tmc.mutation.Link(); ok {
-		_spec.SetField(threadmodel.FieldLink, field.TypeString, value)
-		_node.Link = value
 	}
 	if value, ok := tmc.mutation.Time(); ok {
 		_spec.SetField(threadmodel.FieldTime, field.TypeTime, value)

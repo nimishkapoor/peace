@@ -34,9 +34,9 @@ func (amu *AttachmentModelUpdate) SetLink(s string) *AttachmentModelUpdate {
 	return amu
 }
 
-// SetTicketID sets the "ticket_id" field.
-func (amu *AttachmentModelUpdate) SetTicketID(u uuid.UUID) *AttachmentModelUpdate {
-	amu.mutation.SetTicketID(u)
+// SetThreadID sets the "thread_id" field.
+func (amu *AttachmentModelUpdate) SetThreadID(u uuid.UUID) *AttachmentModelUpdate {
+	amu.mutation.SetThreadID(u)
 	return amu
 }
 
@@ -84,8 +84,8 @@ func (amu *AttachmentModelUpdate) sqlSave(ctx context.Context) (n int, err error
 	if value, ok := amu.mutation.Link(); ok {
 		_spec.SetField(attachmentmodel.FieldLink, field.TypeString, value)
 	}
-	if value, ok := amu.mutation.TicketID(); ok {
-		_spec.SetField(attachmentmodel.FieldTicketID, field.TypeUUID, value)
+	if value, ok := amu.mutation.ThreadID(); ok {
+		_spec.SetField(attachmentmodel.FieldThreadID, field.TypeUUID, value)
 	}
 	if n, err = sqlgraph.UpdateNodes(ctx, amu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -113,9 +113,9 @@ func (amuo *AttachmentModelUpdateOne) SetLink(s string) *AttachmentModelUpdateOn
 	return amuo
 }
 
-// SetTicketID sets the "ticket_id" field.
-func (amuo *AttachmentModelUpdateOne) SetTicketID(u uuid.UUID) *AttachmentModelUpdateOne {
-	amuo.mutation.SetTicketID(u)
+// SetThreadID sets the "thread_id" field.
+func (amuo *AttachmentModelUpdateOne) SetThreadID(u uuid.UUID) *AttachmentModelUpdateOne {
+	amuo.mutation.SetThreadID(u)
 	return amuo
 }
 
@@ -193,8 +193,8 @@ func (amuo *AttachmentModelUpdateOne) sqlSave(ctx context.Context) (_node *Attac
 	if value, ok := amuo.mutation.Link(); ok {
 		_spec.SetField(attachmentmodel.FieldLink, field.TypeString, value)
 	}
-	if value, ok := amuo.mutation.TicketID(); ok {
-		_spec.SetField(attachmentmodel.FieldTicketID, field.TypeUUID, value)
+	if value, ok := amuo.mutation.ThreadID(); ok {
+		_spec.SetField(attachmentmodel.FieldThreadID, field.TypeUUID, value)
 	}
 	_node = &AttachmentModel{config: amuo.config}
 	_spec.Assign = _node.assignValues

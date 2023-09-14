@@ -25,18 +25,19 @@ type User struct {
 }
 
 type Ticket struct {
-	TicketId       uuid.UUID `json:"ticket_id"`
-	UserID         uuid.UUID `json:"user_id"`
-	TenantID       uuid.UUID `json:"tenant_id"`
-	Subject        string    `json:"subject"`
-	Body           string    `json:"body"`
-	Category       uuid.UUID `json:"category"`
-	Severity       int       `json:"severity"`
-	Assignee       uuid.UUID `json:"asignee"`
-	Label          string    `json:"label"`
-	Status         int       `json:"status"`
-	ClientPriority int       `json:"client_priority"`
-	Source         string    `json:"source"`
+	TicketId       uuid.UUID     `json:"ticket_id"`
+	UserID         uuid.UUID     `json:"user_id"`
+	TenantID       uuid.UUID     `json:"tenant_id"`
+	Subject        string        `json:"subject"`
+	Body           string        `json:"body"`
+	Category       uuid.UUID     `json:"category"`
+	Severity       int           `json:"severity"`
+	Assignee       uuid.UUID     `json:"asignee"`
+	Label          string        `json:"label"`
+	Status         int           `json:"status"`
+	ClientPriority int           `json:"client_priority"`
+	Source         string        `json:"source"`
+	Attachments    []*Attachment `josn:"attachments"`
 }
 
 type Category struct {
@@ -52,10 +53,10 @@ type Attachment struct {
 }
 
 type Comment struct {
-	CommentID  uuid.UUID  `json:"comment_id"`
-	Body       string     `json:"body"`
-	TicketID   uuid.UUID  `json:"ticket_id"`
-	Attachment Attachment `json:"attachment"`
+	CommentID   uuid.UUID     `json:"comment_id"`
+	Body        string        `json:"body"`
+	TicketID    uuid.UUID     `json:"ticket_id"`
+	Attachments []*Attachment `json:"attachment"`
 }
 
 type Repository interface {

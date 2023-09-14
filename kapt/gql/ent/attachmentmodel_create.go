@@ -26,9 +26,9 @@ func (amc *AttachmentModelCreate) SetLink(s string) *AttachmentModelCreate {
 	return amc
 }
 
-// SetTicketID sets the "ticket_id" field.
-func (amc *AttachmentModelCreate) SetTicketID(u uuid.UUID) *AttachmentModelCreate {
-	amc.mutation.SetTicketID(u)
+// SetThreadID sets the "thread_id" field.
+func (amc *AttachmentModelCreate) SetThreadID(u uuid.UUID) *AttachmentModelCreate {
+	amc.mutation.SetThreadID(u)
 	return amc
 }
 
@@ -75,8 +75,8 @@ func (amc *AttachmentModelCreate) check() error {
 	if _, ok := amc.mutation.Link(); !ok {
 		return &ValidationError{Name: "link", err: errors.New(`ent: missing required field "AttachmentModel.link"`)}
 	}
-	if _, ok := amc.mutation.TicketID(); !ok {
-		return &ValidationError{Name: "ticket_id", err: errors.New(`ent: missing required field "AttachmentModel.ticket_id"`)}
+	if _, ok := amc.mutation.ThreadID(); !ok {
+		return &ValidationError{Name: "thread_id", err: errors.New(`ent: missing required field "AttachmentModel.thread_id"`)}
 	}
 	return nil
 }
@@ -117,9 +117,9 @@ func (amc *AttachmentModelCreate) createSpec() (*AttachmentModel, *sqlgraph.Crea
 		_spec.SetField(attachmentmodel.FieldLink, field.TypeString, value)
 		_node.Link = value
 	}
-	if value, ok := amc.mutation.TicketID(); ok {
-		_spec.SetField(attachmentmodel.FieldTicketID, field.TypeUUID, value)
-		_node.TicketID = value
+	if value, ok := amc.mutation.ThreadID(); ok {
+		_spec.SetField(attachmentmodel.FieldThreadID, field.TypeUUID, value)
+		_node.ThreadID = value
 	}
 	return _node, _spec
 }

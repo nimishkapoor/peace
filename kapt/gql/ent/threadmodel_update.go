@@ -35,12 +35,6 @@ func (tmu *ThreadModelUpdate) SetBody(s string) *ThreadModelUpdate {
 	return tmu
 }
 
-// SetLink sets the "link" field.
-func (tmu *ThreadModelUpdate) SetLink(s string) *ThreadModelUpdate {
-	tmu.mutation.SetLink(s)
-	return tmu
-}
-
 // SetTime sets the "time" field.
 func (tmu *ThreadModelUpdate) SetTime(t time.Time) *ThreadModelUpdate {
 	tmu.mutation.SetTime(t)
@@ -103,9 +97,6 @@ func (tmu *ThreadModelUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	if value, ok := tmu.mutation.Body(); ok {
 		_spec.SetField(threadmodel.FieldBody, field.TypeString, value)
 	}
-	if value, ok := tmu.mutation.Link(); ok {
-		_spec.SetField(threadmodel.FieldLink, field.TypeString, value)
-	}
 	if value, ok := tmu.mutation.Time(); ok {
 		_spec.SetField(threadmodel.FieldTime, field.TypeTime, value)
 	}
@@ -138,12 +129,6 @@ type ThreadModelUpdateOne struct {
 // SetBody sets the "body" field.
 func (tmuo *ThreadModelUpdateOne) SetBody(s string) *ThreadModelUpdateOne {
 	tmuo.mutation.SetBody(s)
-	return tmuo
-}
-
-// SetLink sets the "link" field.
-func (tmuo *ThreadModelUpdateOne) SetLink(s string) *ThreadModelUpdateOne {
-	tmuo.mutation.SetLink(s)
 	return tmuo
 }
 
@@ -238,9 +223,6 @@ func (tmuo *ThreadModelUpdateOne) sqlSave(ctx context.Context) (_node *ThreadMod
 	}
 	if value, ok := tmuo.mutation.Body(); ok {
 		_spec.SetField(threadmodel.FieldBody, field.TypeString, value)
-	}
-	if value, ok := tmuo.mutation.Link(); ok {
-		_spec.SetField(threadmodel.FieldLink, field.TypeString, value)
 	}
 	if value, ok := tmuo.mutation.Time(); ok {
 		_spec.SetField(threadmodel.FieldTime, field.TypeTime, value)

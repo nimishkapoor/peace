@@ -13,8 +13,6 @@ const (
 	FieldID = "thread_id"
 	// FieldBody holds the string denoting the body field in the database.
 	FieldBody = "body"
-	// FieldLink holds the string denoting the link field in the database.
-	FieldLink = "link"
 	// FieldTime holds the string denoting the time field in the database.
 	FieldTime = "time"
 	// FieldTicketUUID holds the string denoting the ticket_uuid field in the database.
@@ -29,7 +27,6 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldBody,
-	FieldLink,
 	FieldTime,
 	FieldTicketUUID,
 	FieldSource,
@@ -56,11 +53,6 @@ func ByID(opts ...sql.OrderTermOption) OrderOption {
 // ByBody orders the results by the body field.
 func ByBody(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldBody, opts...).ToFunc()
-}
-
-// ByLink orders the results by the link field.
-func ByLink(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldLink, opts...).ToFunc()
 }
 
 // ByTime orders the results by the time field.

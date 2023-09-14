@@ -13,8 +13,8 @@ const (
 	FieldID = "attachment_id"
 	// FieldLink holds the string denoting the link field in the database.
 	FieldLink = "link"
-	// FieldTicketID holds the string denoting the ticket_id field in the database.
-	FieldTicketID = "ticket_id"
+	// FieldThreadID holds the string denoting the thread_id field in the database.
+	FieldThreadID = "thread_id"
 	// Table holds the table name of the attachmentmodel in the database.
 	Table = "attachment_models"
 )
@@ -23,7 +23,7 @@ const (
 var Columns = []string{
 	FieldID,
 	FieldLink,
-	FieldTicketID,
+	FieldThreadID,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -49,7 +49,7 @@ func ByLink(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldLink, opts...).ToFunc()
 }
 
-// ByTicketID orders the results by the ticket_id field.
-func ByTicketID(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldTicketID, opts...).ToFunc()
+// ByThreadID orders the results by the thread_id field.
+func ByThreadID(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldThreadID, opts...).ToFunc()
 }

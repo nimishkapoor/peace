@@ -20,8 +20,6 @@ type ThreadModel struct {
 	ID uuid.UUID `json:"id,omitempty"`
 	// Body holds the value of the "body" field.
 	Body string `json:"body,omitempty"`
-	// Link holds the value of the "link" field.
-	Link string `json:"link,omitempty"`
 	// Time holds the value of the "time" field.
 	Time time.Time `json:"time,omitempty"`
 	// TicketUUID holds the value of the "ticket_uuid" field.
@@ -36,7 +34,7 @@ func (*ThreadModel) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case threadmodel.FieldBody, threadmodel.FieldLink, threadmodel.FieldSource:
+		case threadmodel.FieldBody, threadmodel.FieldSource:
 			values[i] = new(sql.NullString)
 		case threadmodel.FieldTime:
 			values[i] = new(sql.NullTime)
@@ -68,12 +66,6 @@ func (tm *ThreadModel) assignValues(columns []string, values []any) error {
 				return fmt.Errorf("unexpected type %T for field body", values[i])
 			} else if value.Valid {
 				tm.Body = value.String
-			}
-		case threadmodel.FieldLink:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field link", values[i])
-			} else if value.Valid {
-				tm.Link = value.String
 			}
 		case threadmodel.FieldTime:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -131,9 +123,6 @@ func (tm *ThreadModel) String() string {
 	builder.WriteString(fmt.Sprintf("id=%v, ", tm.ID))
 	builder.WriteString("body=")
 	builder.WriteString(tm.Body)
-	builder.WriteString(", ")
-	builder.WriteString("link=")
-	builder.WriteString(tm.Link)
 	builder.WriteString(", ")
 	builder.WriteString("time=")
 	builder.WriteString(tm.Time.Format(time.ANSIC))

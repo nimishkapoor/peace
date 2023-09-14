@@ -60,11 +60,6 @@ func Body(v string) predicate.ThreadModel {
 	return predicate.ThreadModel(sql.FieldEQ(FieldBody, v))
 }
 
-// Link applies equality check predicate on the "link" field. It's identical to LinkEQ.
-func Link(v string) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldEQ(FieldLink, v))
-}
-
 // Time applies equality check predicate on the "time" field. It's identical to TimeEQ.
 func Time(v time.Time) predicate.ThreadModel {
 	return predicate.ThreadModel(sql.FieldEQ(FieldTime, v))
@@ -143,71 +138,6 @@ func BodyEqualFold(v string) predicate.ThreadModel {
 // BodyContainsFold applies the ContainsFold predicate on the "body" field.
 func BodyContainsFold(v string) predicate.ThreadModel {
 	return predicate.ThreadModel(sql.FieldContainsFold(FieldBody, v))
-}
-
-// LinkEQ applies the EQ predicate on the "link" field.
-func LinkEQ(v string) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldEQ(FieldLink, v))
-}
-
-// LinkNEQ applies the NEQ predicate on the "link" field.
-func LinkNEQ(v string) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldNEQ(FieldLink, v))
-}
-
-// LinkIn applies the In predicate on the "link" field.
-func LinkIn(vs ...string) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldIn(FieldLink, vs...))
-}
-
-// LinkNotIn applies the NotIn predicate on the "link" field.
-func LinkNotIn(vs ...string) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldNotIn(FieldLink, vs...))
-}
-
-// LinkGT applies the GT predicate on the "link" field.
-func LinkGT(v string) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldGT(FieldLink, v))
-}
-
-// LinkGTE applies the GTE predicate on the "link" field.
-func LinkGTE(v string) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldGTE(FieldLink, v))
-}
-
-// LinkLT applies the LT predicate on the "link" field.
-func LinkLT(v string) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldLT(FieldLink, v))
-}
-
-// LinkLTE applies the LTE predicate on the "link" field.
-func LinkLTE(v string) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldLTE(FieldLink, v))
-}
-
-// LinkContains applies the Contains predicate on the "link" field.
-func LinkContains(v string) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldContains(FieldLink, v))
-}
-
-// LinkHasPrefix applies the HasPrefix predicate on the "link" field.
-func LinkHasPrefix(v string) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldHasPrefix(FieldLink, v))
-}
-
-// LinkHasSuffix applies the HasSuffix predicate on the "link" field.
-func LinkHasSuffix(v string) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldHasSuffix(FieldLink, v))
-}
-
-// LinkEqualFold applies the EqualFold predicate on the "link" field.
-func LinkEqualFold(v string) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldEqualFold(FieldLink, v))
-}
-
-// LinkContainsFold applies the ContainsFold predicate on the "link" field.
-func LinkContainsFold(v string) predicate.ThreadModel {
-	return predicate.ThreadModel(sql.FieldContainsFold(FieldLink, v))
 }
 
 // TimeEQ applies the EQ predicate on the "time" field.

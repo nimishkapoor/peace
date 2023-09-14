@@ -12,7 +12,7 @@ var (
 	AttachmentModelsColumns = []*schema.Column{
 		{Name: "attachment_id", Type: field.TypeUUID},
 		{Name: "link", Type: field.TypeString},
-		{Name: "ticket_id", Type: field.TypeUUID},
+		{Name: "thread_id", Type: field.TypeUUID},
 	}
 	// AttachmentModelsTable holds the schema information for the "attachment_models" table.
 	AttachmentModelsTable = &schema.Table{
@@ -48,7 +48,6 @@ var (
 	ThreadModelsColumns = []*schema.Column{
 		{Name: "thread_id", Type: field.TypeUUID},
 		{Name: "body", Type: field.TypeString},
-		{Name: "link", Type: field.TypeString},
 		{Name: "time", Type: field.TypeTime},
 		{Name: "ticket_uuid", Type: field.TypeUUID},
 		{Name: "source", Type: field.TypeString},

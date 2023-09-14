@@ -45,7 +45,7 @@ type AttachmentModelMutation struct {
 	typ           string
 	id            *uuid.UUID
 	link          *string
-	ticket_id     *uuid.UUID
+	thread_id     *uuid.UUID
 	clearedFields map[string]struct{}
 	done          bool
 	oldValue      func(context.Context) (*AttachmentModel, error)
@@ -192,40 +192,40 @@ func (m *AttachmentModelMutation) ResetLink() {
 	m.link = nil
 }
 
-// SetTicketID sets the "ticket_id" field.
-func (m *AttachmentModelMutation) SetTicketID(u uuid.UUID) {
-	m.ticket_id = &u
+// SetThreadID sets the "thread_id" field.
+func (m *AttachmentModelMutation) SetThreadID(u uuid.UUID) {
+	m.thread_id = &u
 }
 
-// TicketID returns the value of the "ticket_id" field in the mutation.
-func (m *AttachmentModelMutation) TicketID() (r uuid.UUID, exists bool) {
-	v := m.ticket_id
+// ThreadID returns the value of the "thread_id" field in the mutation.
+func (m *AttachmentModelMutation) ThreadID() (r uuid.UUID, exists bool) {
+	v := m.thread_id
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldTicketID returns the old "ticket_id" field's value of the AttachmentModel entity.
+// OldThreadID returns the old "thread_id" field's value of the AttachmentModel entity.
 // If the AttachmentModel object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AttachmentModelMutation) OldTicketID(ctx context.Context) (v uuid.UUID, err error) {
+func (m *AttachmentModelMutation) OldThreadID(ctx context.Context) (v uuid.UUID, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldTicketID is only allowed on UpdateOne operations")
+		return v, errors.New("OldThreadID is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldTicketID requires an ID field in the mutation")
+		return v, errors.New("OldThreadID requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldTicketID: %w", err)
+		return v, fmt.Errorf("querying old value for OldThreadID: %w", err)
 	}
-	return oldValue.TicketID, nil
+	return oldValue.ThreadID, nil
 }
 
-// ResetTicketID resets all changes to the "ticket_id" field.
-func (m *AttachmentModelMutation) ResetTicketID() {
-	m.ticket_id = nil
+// ResetThreadID resets all changes to the "thread_id" field.
+func (m *AttachmentModelMutation) ResetThreadID() {
+	m.thread_id = nil
 }
 
 // Where appends a list predicates to the AttachmentModelMutation builder.
@@ -266,8 +266,8 @@ func (m *AttachmentModelMutation) Fields() []string {
 	if m.link != nil {
 		fields = append(fields, attachmentmodel.FieldLink)
 	}
-	if m.ticket_id != nil {
-		fields = append(fields, attachmentmodel.FieldTicketID)
+	if m.thread_id != nil {
+		fields = append(fields, attachmentmodel.FieldThreadID)
 	}
 	return fields
 }
@@ -279,8 +279,8 @@ func (m *AttachmentModelMutation) Field(name string) (ent.Value, bool) {
 	switch name {
 	case attachmentmodel.FieldLink:
 		return m.Link()
-	case attachmentmodel.FieldTicketID:
-		return m.TicketID()
+	case attachmentmodel.FieldThreadID:
+		return m.ThreadID()
 	}
 	return nil, false
 }
@@ -292,8 +292,8 @@ func (m *AttachmentModelMutation) OldField(ctx context.Context, name string) (en
 	switch name {
 	case attachmentmodel.FieldLink:
 		return m.OldLink(ctx)
-	case attachmentmodel.FieldTicketID:
-		return m.OldTicketID(ctx)
+	case attachmentmodel.FieldThreadID:
+		return m.OldThreadID(ctx)
 	}
 	return nil, fmt.Errorf("unknown AttachmentModel field %s", name)
 }
@@ -310,12 +310,12 @@ func (m *AttachmentModelMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetLink(v)
 		return nil
-	case attachmentmodel.FieldTicketID:
+	case attachmentmodel.FieldThreadID:
 		v, ok := value.(uuid.UUID)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetTicketID(v)
+		m.SetThreadID(v)
 		return nil
 	}
 	return fmt.Errorf("unknown AttachmentModel field %s", name)
@@ -369,8 +369,8 @@ func (m *AttachmentModelMutation) ResetField(name string) error {
 	case attachmentmodel.FieldLink:
 		m.ResetLink()
 		return nil
-	case attachmentmodel.FieldTicketID:
-		m.ResetTicketID()
+	case attachmentmodel.FieldThreadID:
+		m.ResetThreadID()
 		return nil
 	}
 	return fmt.Errorf("unknown AttachmentModel field %s", name)
@@ -1239,7 +1239,6 @@ type ThreadModelMutation struct {
 	typ           string
 	id            *uuid.UUID
 	body          *string
-	link          *string
 	time          *time.Time
 	ticket_uuid   *uuid.UUID
 	source        *string
@@ -1389,42 +1388,6 @@ func (m *ThreadModelMutation) ResetBody() {
 	m.body = nil
 }
 
-// SetLink sets the "link" field.
-func (m *ThreadModelMutation) SetLink(s string) {
-	m.link = &s
-}
-
-// Link returns the value of the "link" field in the mutation.
-func (m *ThreadModelMutation) Link() (r string, exists bool) {
-	v := m.link
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldLink returns the old "link" field's value of the ThreadModel entity.
-// If the ThreadModel object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ThreadModelMutation) OldLink(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldLink is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldLink requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldLink: %w", err)
-	}
-	return oldValue.Link, nil
-}
-
-// ResetLink resets all changes to the "link" field.
-func (m *ThreadModelMutation) ResetLink() {
-	m.link = nil
-}
-
 // SetTime sets the "time" field.
 func (m *ThreadModelMutation) SetTime(t time.Time) {
 	m.time = &t
@@ -1567,12 +1530,9 @@ func (m *ThreadModelMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *ThreadModelMutation) Fields() []string {
-	fields := make([]string, 0, 5)
+	fields := make([]string, 0, 4)
 	if m.body != nil {
 		fields = append(fields, threadmodel.FieldBody)
-	}
-	if m.link != nil {
-		fields = append(fields, threadmodel.FieldLink)
 	}
 	if m.time != nil {
 		fields = append(fields, threadmodel.FieldTime)
@@ -1593,8 +1553,6 @@ func (m *ThreadModelMutation) Field(name string) (ent.Value, bool) {
 	switch name {
 	case threadmodel.FieldBody:
 		return m.Body()
-	case threadmodel.FieldLink:
-		return m.Link()
 	case threadmodel.FieldTime:
 		return m.Time()
 	case threadmodel.FieldTicketUUID:
@@ -1612,8 +1570,6 @@ func (m *ThreadModelMutation) OldField(ctx context.Context, name string) (ent.Va
 	switch name {
 	case threadmodel.FieldBody:
 		return m.OldBody(ctx)
-	case threadmodel.FieldLink:
-		return m.OldLink(ctx)
 	case threadmodel.FieldTime:
 		return m.OldTime(ctx)
 	case threadmodel.FieldTicketUUID:
@@ -1635,13 +1591,6 @@ func (m *ThreadModelMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetBody(v)
-		return nil
-	case threadmodel.FieldLink:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetLink(v)
 		return nil
 	case threadmodel.FieldTime:
 		v, ok := value.(time.Time)
@@ -1715,9 +1664,6 @@ func (m *ThreadModelMutation) ResetField(name string) error {
 	switch name {
 	case threadmodel.FieldBody:
 		m.ResetBody()
-		return nil
-	case threadmodel.FieldLink:
-		m.ResetLink()
 		return nil
 	case threadmodel.FieldTime:
 		m.ResetTime()
